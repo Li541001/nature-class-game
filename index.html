@@ -11,6 +11,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Chiron+GoRound+TC:wght@200..900&family=Chocolate+Classical+Sans&display=swap" rel="stylesheet">
 
     <style>
+        /* ==========================================
+           1. 變數與基礎設定 (Variables & Base)
+        ========================================== */
         :root {
             --bg0: #07060a;
             --bg1: #0e0b12;
@@ -38,7 +41,7 @@
         body {
             margin: 0; color: var(--ink); font-family: 'Chiron GoRound TC', sans-serif;
             background: radial-gradient(1200px 800px at 20% 10%, rgba(215, 179, 93, .08), transparent 55%),
-                linear-gradient(180deg, var(--bg0), var(--bg1) 40%, #06050a 100%);
+                        linear-gradient(180deg, var(--bg0), var(--bg1) 40%, #06050a 100%);
             background-attachment: fixed; overflow-x: hidden; position: relative;
         }
 
@@ -49,6 +52,16 @@
         }
 
         a { color: var(--gold); text-decoration: none; }
+
+        /* ==========================================
+           2. 背景裝飾與動畫 (Background Effects)
+        ========================================== */
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-10px); }
+            40%, 80% { transform: translateX(10px); }
+        }
+        .shake { animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both !important; transition: none !important; }
 
         .bg-orb-container { position: fixed; inset: 0; overflow: hidden; pointer-events: none; z-index: -1; }
         .bg-orb { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.2; animation: floatOrb 10s infinite alternate ease-in-out; will-change: transform; transform: translateZ(0); }
@@ -82,21 +95,23 @@
         .deco-divider { height: 1px; width: 100%; background: linear-gradient(90deg, transparent, rgba(215, 179, 93, 0.4), transparent); margin: 40px 0; position: relative; display: flex; justify-content: center; align-items: center; }
         .deco-divider::after { content: '✦'; position: absolute; color: var(--gold); font-size: 14px; text-shadow: 0 0 10px var(--gold); background: rgba(18, 14, 22, 0.8); padding: 0 15px; backdrop-filter: blur(4px); border-radius: 50%; }
 
+        /* ==========================================
+           3. UI 元件 (Components)
+        ========================================== */
+        /* 導覽列與進度樹 */
         .nav { position: sticky; top: 0; z-index: 50; padding: 12px 0; backdrop-filter: var(--blur); -webkit-backdrop-filter: var(--blur); background: rgba(14, 11, 18, 0.7); border-bottom: 1px solid var(--stroke); box-shadow: 0 4px 30px rgba(0,0,0,0.5); }
-        
         .navInner { max-width: var(--max); margin: 0 auto; padding: 0 18px; display: flex; align-items: center; justify-content: space-between; flex-wrap: nowrap; gap: 10px; }
-        
         .nav-left { display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
         .nav-right { display: flex; align-items: center; gap: 15px; flex-shrink: 1; min-width: 0; }
         .nav-logo { width: 32px; margin-right: 8px; filter: drop-shadow(0 0 5px rgba(215,179,93,0.5)); }
         .brand { font-weight: 700; font-size: 18px; background: linear-gradient(135deg, var(--gold-light), var(--gold)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 2px 10px rgba(215,179,93,0.2); }
         
         .player-info { font-size: 16px; font-weight: bold; color: var(--gold); background: rgba(0, 0, 0, 0.6); padding: 6px 14px; border-radius: 8px; border: 1px solid var(--stroke); display: block; box-shadow: 0 4px 10px rgba(0,0,0,0.3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-
         .scroll-tree { position: relative; font-size: 26px; line-height: 1; user-select: none; flex-shrink: 0; }
         .tree-bg { filter: grayscale(1) opacity(0.3); display: block; }
         .tree-fg { position: absolute; top: 0; left: 0; filter: drop-shadow(0 0 8px rgba(107, 209, 124, 0.6)); clip-path: inset(100% 0 0 0); transition: clip-path 0.2s ease-out; }
 
+        /* 排版與區塊 */
         .wrap { max-width: var(--max); display: flex; justify-content: center; align-items: center; flex-direction: column; margin: 0 auto; padding: 24px 18px 90px }
         .block1 { color:var(--gold); display: inline-flex; align-items: center; gap: 10px; font-weight: bold; letter-spacing: 0.2em; margin-bottom: 28px; text-shadow: 0 0 15px rgba(215,179,93,0.4); }
         .block1::before, .block1::after { content: ''; display: block; width: 40px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold)); }
@@ -109,20 +124,19 @@
         .subtitle { display: inline-flex; align-items: center; gap: 8px; color: var(--muted); font-size: 16px; margin: 0 0 0px; position: relative; z-index: 2; letter-spacing: 1px; }
         .subtitle::before { content: ''; display: block; width: 30px; height: 1px; background: var(--muted); opacity: 0.6; }
 
+        /* 圖片展區 */
         .img-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 24px; position: relative; z-index: 2; }
-        
         .img-card { border-radius: 16px; overflow: hidden; padding: 12px; text-align: center; transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); position: relative; }
         .img-card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0,0,0,0.5); }
         .img-card img { width: 100%; border-radius: 10px; margin-bottom: 12px; aspect-ratio: 16/9; object-fit: cover; transition: transform 0.6s ease, filter 0.4s; filter: brightness(0.9); }
         .img-card:hover img { transform: scale(1.05); filter: brightness(1.1); }
         .img-card p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.6; padding: 0 8px; text-align: left; }
 
+        /* 題目與作答區 (Question Cards) */
         .category-header { color: var(--gold); font-size: 22px; font-weight: bold; margin: 40px 0 15px 0; border-bottom: 1px solid rgba(215, 179, 93, 0.3); padding-bottom: 10px; letter-spacing: 2px; }
         .category-header span { color: var(--clay); margin-right: 8px; }
-
         .secProblem { position: relative; z-index: 2; padding-top: 10px; display: flex; flex-direction: column;}
         
-        /* --- 題目卡片設計 --- */
         .question-card { background: rgba(0, 0, 0, .35); backdrop-filter: blur(10px); border: 1px solid rgba(215, 179, 93, 0.15); border-radius: 16px; padding: 55px 24px 24px 24px; margin-top: 16px; transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1); position: relative; overflow: hidden; }
         .question-card::before { content: ''; position: absolute; left: 0; top: 10%; bottom: 10%; width: 3px; border-radius: 0 4px 4px 0; opacity: 0; transition: 0.3s; }
         
@@ -138,30 +152,19 @@
         .question-card.active:hover { transform: translateY(-2px); box-shadow: 0 12px 24px rgba(0,0,0,0.4); background: rgba(107, 209, 124, 0.05); }
         .question-card.active::before { background: var(--ok); }
         .question-card.active:hover::before { opacity: 1; top: 0; bottom: 0; }
+        
         .active .q-status { background: rgba(107, 209, 124, 0.1); color: var(--ok); border-color: rgba(107, 209, 124, 0.4); }
 
-        .question-card.error-bet {
-            border-color: var(--danger) !important;
-            box-shadow: 0 0 25px rgba(255, 102, 102, 0.3), inset 0 0 10px rgba(255, 102, 102, 0.1) !important;
-            background: rgba(255, 102, 102, 0.03) !important;
-            animation: none !important;
-        }
-        .question-card.error-bet::before {
-            background: var(--danger) !important;
-            opacity: 1 !important;
-            top: 0 !important;
-            bottom: 0 !important;
-        }
+        .question-card.error-bet { border-color: var(--danger) !important; box-shadow: 0 0 25px rgba(255, 102, 102, 0.3), inset 0 0 10px rgba(255, 102, 102, 0.1) !important; background: rgba(255, 102, 102, 0.03) !important; animation: none !important; }
+        .question-card.error-bet::before { background: var(--danger) !important; opacity: 1 !important; top: 0 !important; bottom: 0 !important; }
 
         .question-card.active.locked-bet { border-color: var(--gg); box-shadow: 0 0 20px rgba(255, 200, 97, 0.2); background: rgba(255, 200, 97, 0.02); animation: none; }
         .question-card.active.locked-bet::before { background: var(--gg); }
-        .active.locked-bet .q-status { background: rgba(255, 200, 97, 0.15); color: var(--gg); border-color: rgba(255, 200, 97, 0.4); }
-
+        
         .question-card.revealed { border-color: var(--gold); animation: none; }
         .revealed .q-status { background: rgba(215, 179, 93, 0.15); color: var(--gold); border-color: rgba(215, 179, 93, 0.4); }
         
         .q-status { position: absolute; top: 15px; right: 15px; font-size: 12px; font-weight: bold; padding: 6px 12px; border-radius: 99px; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255,255,255,0.1); z-index: 5; transition: 0.3s; }
-        
         .q-text { font-size: 19px; margin-top: 0; font-weight: bold; letter-spacing: 0.5px; color: #fff; padding-right: 0; } 
         
         .option-row { display: flex; justify-content: space-between; align-items: center; background: rgba(255, 255, 255, .03); padding: 14px 18px; border-radius: 12px; margin-top: 12px; border: 1px solid rgba(255,255,255,0.05); transition: all 0.3s; }
@@ -182,34 +185,22 @@
         .btn-submit:active:not(:disabled) { transform: translateY(2px) scale(0.96); box-shadow: 0 2px 5px rgba(0,0,0,0.5); filter: brightness(0.9); }
         .btn-submit:disabled { background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.3); border-color: transparent; cursor: not-allowed; box-shadow: none; transform: none; }
 
-        /* --- 登入介面 --- */
-        #loginModal { 
-            position: fixed; inset: 0; 
-            background: rgba(7, 6, 10, 0.75); 
-            backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); 
-            z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; 
-            overflow: hidden;
-        }
+        /* 排名按鈕特規 */
+        .btn-rank { position: relative; overflow: hidden; width: 50px; padding: 4px; border-radius: 5px; border: 1px solid rgba(255,255,255,0.2); background: linear-gradient(135deg, rgba(215, 179, 93, 0.9), rgba(184, 144, 58, 0.7)); color: #000; font-weight: 900; font-size: 11px; cursor: pointer; transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1); box-shadow: 0 6px 15px rgba(0,0,0,0.3); z-index: 1; }
+        .btn-rank::after { content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent); transform: skewX(-20deg); z-index: -1; transition: 0s; }
+        .btn-rank:hover:not(:disabled) { transform: translateY(-3px); box-shadow: 0 12px 20px rgba(215,179,93,0.4); filter: brightness(1.1); }
+        .btn-rank:hover:not(:disabled)::after { animation: sweepingShine 1.5s ease-in-out infinite; }
+        .btn-rank:active:not(:disabled) { transform: translateY(2px) scale(0.96); box-shadow: 0 2px 5px rgba(0,0,0,0.5); filter: brightness(0.9); }
 
-        .login-glow {
-            position: absolute; width: 120vw; height: 120vh;
-            background: radial-gradient(circle at 50% 50%, rgba(215, 179, 93, 0.1) 0%, rgba(107, 209, 124, 0.05) 40%, transparent 70%);
-            animation: pulseGlow 8s infinite alternate ease-in-out; z-index: 0; pointer-events: none;
-        }
+        /* ==========================================
+           4. 覆蓋層與彈窗 (Modals)
+        ========================================== */
+        /* 登入介面 */
+        #loginModal { position: fixed; inset: 0; background: rgba(7, 6, 10, 0.75); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; overflow: hidden; }
+        .login-glow { position: absolute; width: 120vw; height: 120vh; background: radial-gradient(circle at 50% 50%, rgba(215, 179, 93, 0.1) 0%, rgba(107, 209, 124, 0.05) 40%, transparent 70%); animation: pulseGlow 8s infinite alternate ease-in-out; z-index: 0; pointer-events: none; }
         @keyframes pulseGlow { 0% { transform: scale(1); } 100% { transform: scale(1.1); } }
 
-        .login-card {
-            position: relative; z-index: 10;
-            padding: 60px 50px; width: 90%; max-width: 440px;
-            background: linear-gradient(145deg, rgba(25, 20, 28, 0.85), rgba(12, 9, 15, 0.95));
-            border-radius: 32px;
-            border: 1px solid rgba(215, 179, 93, 0.2);
-            box-shadow: 0 30px 60px rgba(0,0,0,0.8), inset 0 2px 0 rgba(215, 179, 93, 0.2);
-            text-align: center;
-            opacity: 0; transform: translateY(40px) scale(0.95);
-            animation: modalEnterRefined 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            animation-delay: 0.1s;
-        }
+        .login-card { position: relative; z-index: 10; padding: 60px 50px; width: 90%; max-width: 440px; background: linear-gradient(145deg, rgba(25, 20, 28, 0.85), rgba(12, 9, 15, 0.95)); border-radius: 32px; border: 1px solid rgba(215, 179, 93, 0.2); box-shadow: 0 30px 60px rgba(0,0,0,0.8), inset 0 2px 0 rgba(215, 179, 93, 0.2); text-align: center; opacity: 0; transform: translateY(40px) scale(0.95); animation: modalEnterRefined 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; animation-delay: 0.1s; }
         @keyframes modalEnterRefined { to { opacity: 1; transform: translateY(0) scale(1); } }
 
         .login-deco-line { width: 60px; height: 3px; background: linear-gradient(90deg, transparent, var(--gold), transparent); margin: 20px auto 30px; border-radius: 2px; }
@@ -223,29 +214,29 @@
         .login-card > *:nth-child(6) { animation-delay: 0.7s; }
         @keyframes fadeUpSoft { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-        .login-input { 
-            padding: 18px 24px; border-radius: 16px; border: 1px solid rgba(215,179,93,0.2); 
-            background: rgba(0,0,0,0.4); color: #fff; font-size: 17px; width: 100%; 
-            margin-bottom: 30px; text-align: center; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); 
-            box-shadow: inset 0 2px 10px rgba(0,0,0,0.5);
-        }
+        .login-input { padding: 18px 24px; border-radius: 16px; border: 1px solid rgba(215,179,93,0.2); background: rgba(0,0,0,0.4); color: #fff; font-size: 17px; width: 100%; margin-bottom: 30px; text-align: center; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); box-shadow: inset 0 2px 10px rgba(0,0,0,0.5); }
         .login-input::placeholder { color: rgba(207, 199, 181, 0.5); letter-spacing: 2px; font-size: 14px;}
         .login-input:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 20px rgba(215, 179, 93, 0.2), inset 0 2px 10px rgba(0,0,0,0.5); background: rgba(0,0,0,0.6); transform: translateY(-2px); }
 
-        .refPanel { position: fixed; bottom: 20px; right: 20px; background: rgba(22, 17, 28, 0.95); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); padding: 20px; border: 1px solid var(--gold); border-radius: 16px; z-index: 9999; display: none; flex-direction: column; gap: 12px; box-shadow: 0 15px 40px rgba(0,0,0,0.6); }
-
+        /* 排行榜彈窗 */
+        #leaderboardModal { display: none; position: fixed; inset: 0; background: rgba(7, 6, 10, 0.85); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); z-index: 10000; flex-direction: column; align-items: center; justify-content: center; overflow: hidden; }
         .rank-item { display: flex; justify-content: space-between; align-items: center; padding: 14px 20px; margin-bottom: 10px; background: rgba(255, 255, 255, 0.05); border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); font-size: 16px; transition: 0.3s;}
         .rank-item:hover { background: rgba(255, 255, 255, 0.1); }
         .rank-item.rank-1 { background: rgba(215, 179, 93, 0.15); border-color: var(--gold); box-shadow: 0 0 15px rgba(215,179,93,0.3);}
         .rank-item.rank-2 { background: rgba(204, 204, 204, 0.15); border-color: #ccc; }
         .rank-item.rank-3 { background: rgba(176, 122, 90, 0.15); border-color: var(--clay); }
 
+        /* 裁判控制台 */
+        .refPanel { position: fixed; bottom: 20px; right: 20px; background: rgba(22, 17, 28, 0.95); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); padding: 20px; border: 1px solid var(--gold); border-radius: 16px; z-index: 9999; display: none; flex-direction: column; gap: 12px; box-shadow: 0 15px 40px rgba(0,0,0,0.6); }
+
+        /* ==========================================
+           5. 響應式佈局 (Mobile RWD)
+        ========================================== */
         @media (max-width: 600px) {
             .navInner { padding: 0 10px; gap: 5px; }
             .nav-logo { width: 22px; margin-right: 5px; }
             .brand { font-size: 14px; }
             .nav-right { gap: 6px; }
-            /* ✨ 確保手機版能夠顯示出排名資訊 */
             .player-info { font-size: 11px; padding: 4px 6px; letter-spacing: 0; max-width: none; }
             .scroll-tree { font-size: 18px; }
             .block1 { font-size: 20px; margin-bottom: 20px; }
@@ -260,28 +251,12 @@
             #loginModal .secTitle { font-size: 28px !important; }
             .login-input { font-size: 15px; width: 100%; max-width: 100%; padding: 14px 16px;}
         }
-
-        .btn-rank { position: relative; overflow: hidden; width: 50px; padding: 4px; border-radius: 5px; border: 1px solid rgba(255,255,255,0.2); background: linear-gradient(135deg, rgba(215, 179, 93, 0.9), rgba(184, 144, 58, 0.7)); color: #000; font-weight: 900; font-size: 11px;  cursor: pointer; transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1); box-shadow: 0 6px 15px rgba(0,0,0,0.3); z-index: 1; }
-        .btn-rank::after { content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent); transform: skewX(-20deg); z-index: -1; transition: 0s; }
-        @keyframes sweepingShine { 0% { left: -100%; } 100% { left: 200%; } }
-        .btn-rank:hover:not(:disabled) { transform: translateY(-3px); box-shadow: 0 12px 20px rgba(215,179,93,0.4); filter: brightness(1.1); }
-        .btn-rank:hover:not(:disabled)::after { animation: sweepingShine 1.5s ease-in-out infinite; }
-        .btn-rank:active:not(:disabled) { transform: translateY(2px) scale(0.96); box-shadow: 0 2px 5px rgba(0,0,0,0.5); filter: brightness(0.9); }
-        .btn-rank:disabled { background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.3); border-color: transparent; cursor: not-allowed; box-shadow: none; transform: none; }
     </style>
 </head>
 
 <body>
-    <div class="bg-orb-container" aria-hidden="true">
-        <div class="bg-orb orb-1"></div>
-        <div class="bg-orb orb-2"></div>
-        <div class="bg-orb orb-3"></div>
-    </div>
-
-    <div class="particles-container" aria-hidden="true">
-        <div class="particle"></div><div class="particle"></div><div class="particle"></div>
-        <div class="particle"></div><div class="particle"></div><div class="particle"></div>
-    </div>
+    <div class="bg-orb-container" aria-hidden="true"><div class="bg-orb orb-1"></div><div class="bg-orb orb-2"></div><div class="bg-orb orb-3"></div></div>
+    <div class="particles-container" aria-hidden="true"><div class="particle"></div><div class="particle"></div><div class="particle"></div><div class="particle"></div><div class="particle"></div><div class="particle"></div></div>
 
     <div id="loginModal">
         <div class="login-glow"></div>
@@ -296,24 +271,20 @@
         </div>
     </div>
 
-    <div id="leaderboardModal" style="display: none; position: fixed; inset: 0; background: rgba(7, 6, 10, 0.85); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); z-index: 10000; flex-direction: column; align-items: center; justify-content: center; overflow: hidden; ">
+    <div id="leaderboardModal">
         <div class="login-glow"></div>
-        <div class="particles-container" aria-hidden="true">
-            <div class="particle"></div><div class="particle"></div><div class="particle"></div>
-        </div>
+        <div class="particles-container" aria-hidden="true"><div class="particle"></div><div class="particle"></div><div class="particle"></div></div>
         <div class="login-card" style="padding: 40px 30px; width: 90%; max-width: 500px; max-height: 85vh; overflow-y: auto;">
             <h1 class="secTitle" style="font-size:32px; margin-bottom: 5px; letter-spacing: 2px;">排行榜</h1>
             <div class="login-deco-line"></div>
-            <ul id="leaderboardList" style="list-style: none; padding: 0; margin: 0; text-align: left;">
-            </ul>
+            <ul id="leaderboardList" style="list-style: none; padding: 0; margin: 0; text-align: left;"></ul>
             <button class="btn-submit" style="margin-top: 25px; border-radius: 12px; padding: 14px;" onclick="document.getElementById('leaderboardModal').style.display='none'">關閉</button>
         </div>
     </div>
 
     <div class="refPanel" id="refPanel">
         <h3 style="margin:0; color:var(--gold); text-align:center; letter-spacing: 2px;">控制台</h3>
-        <select id="refQSelect" style="padding:10px; border-radius:10px; background:rgba(0,0,0,0.6); color:#fff; border:1px solid rgba(215,179,93,0.5); font-size: 14px; outline: none;">
-        </select>
+        <select id="refQSelect" style="padding:10px; border-radius:10px; background:rgba(0,0,0,0.6); color:#fff; border:1px solid rgba(215,179,93,0.5); font-size: 14px; outline: none;"></select>
         <button class="btn-submit" onclick="refOpenBet()">開放作答</button>
         <button class="btn-submit" style="background:linear-gradient(135deg, var(--danger), #cc0000); color:#fff; border:none;" onclick="refReveal()">結束下注並結算</button>
     </div>
@@ -324,14 +295,11 @@
                 <img class="nav-logo" src="./static/logo.png" alt="logo" onerror="this.style.display='none'"/>
                 <div class="brand">大自然遊樂園</div>
             </div>
-            
             <div class="nav-right">
                 <button class="btn-rank" id="btn-leaderboard" onclick="document.getElementById('leaderboardModal').style.display='flex'" style="display:none; cursor: pointer; background: rgba(215, 179, 93, 0.15); border-color: var(--gold); color: var(--gold);">排名</button>
-                
                 <div class="player-info" id="playerInfo" style="display: none;">
                     名稱： <span id="playerName"></span> &nbsp;|&nbsp; 錢： <span id="playerChips">1000</span> &nbsp;|&nbsp; 🏆第 <span id="playerRank">-</span> 名
                 </div>
-                
                 <div class="scroll-tree" title="網頁探索進度">
                     <span class="tree-bg">🌳</span>
                     <span class="tree-fg" id="scrollTreeFg">🌳</span>
@@ -344,11 +312,7 @@
         <h1 class="block1 reveal-up">地球奇觀區</h1>
         
         <section id="section1" class="reveal-up" style="transition-delay: 0.1s;">
-            <div class="ui-deco-dots" aria-hidden="true">
-                <div class="ui-deco-dot"></div><div class="ui-deco-dot"></div><div class="ui-deco-dot"></div>
-                <div class="ui-deco-dot"></div><div class="ui-deco-dot"></div>
-            </div>
-
+            <div class="ui-deco-dots" aria-hidden="true"><div class="ui-deco-dot"></div><div class="ui-deco-dot"></div><div class="ui-deco-dot"></div><div class="ui-deco-dot"></div><div class="ui-deco-dot"></div></div>
             <h1 class="secTitle">月球登陸計畫</h1>
             <p class="subtitle" style="margin-bottom: 15px;">探索大自然最神秘的角落，從深海到宇宙</p>
             <p style="line-height: 1.8; color: var(--muted); position: relative; z-index: 2; margin-top: 10px; font-size: 17px;">
@@ -376,33 +340,7 @@
         </section>
     </div>
     
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const revealElements = document.querySelectorAll('.reveal-up, .reveal-left, .reveal-right');
-            const revealObserver = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('is-visible');
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, { threshold: 0.1 });
-            revealElements.forEach(el => revealObserver.observe(el));
-
-            const treeFg = document.getElementById('scrollTreeFg');
-            window.addEventListener('scroll', () => {
-                const scrollTop = window.scrollY;
-                const docHeight = document.body.scrollHeight - window.innerHeight;
-                let scrollPercent = 0;
-                if(docHeight > 0) scrollPercent = (scrollTop / docHeight) * 100;
-                if(treeFg) treeFg.style.clipPath = `inset(${100 - scrollPercent}% 0 0 0)`;
-            });
-            window.dispatchEvent(new Event('scroll'));
-        });
-    </script>
-    
     <script src="/socket.io/socket.io.js"></script>
     <script src="app.js"></script>
 </body>
-
 </html>
