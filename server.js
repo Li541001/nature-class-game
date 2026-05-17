@@ -147,6 +147,34 @@ io.on('connection', (socket) => {
 
         await syncPlayersFromDB(); // 結算完畢，更新所有人畫面
     });
+    // [裁判] 重新開始遊戲 (保留人員，但籌碼恢復1000，清空下注紀錄與題目狀態)
+    socket.on('referee_reset_game', async () => {
+        // 更新資料庫中所有玩家
+        await Player.updateMany({}, {
+            $set: { chips: 1000, bets: {}, locked: {} }
+        });
+        
+        // 重置記憶體中的遊戲狀態
+        gameState.activeQuestionId = null;
+        gameState.revealedQuestions = [];
+        
+        await syncPlayersFromDB(); // 同步給所有人
+        io.emit('game_reset'); // 廣播強制刷新指令
+    });
+
+    // [裁判] 清除所有人員 (刪除資料庫所有玩家資料)
+    socket.on('referee_clear_players', async () => {
+        // 清空 MongoDB 中的 Player 表
+        await Player.deleteMany({});
+        
+        // 重置記憶體狀態
+        gameState.activeQuestionId = null;
+        gameState.revealedQuestions = [];
+        gameState.players = {};
+        
+        await syncPlayersFromDB();
+        io.emit('force_kick'); // 廣播踢人指令
+    });
 });
 
 const PORT = process.env.PORT || 3000;

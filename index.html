@@ -285,8 +285,12 @@
     <div class="refPanel" id="refPanel">
         <h3 style="margin:0; color:var(--gold); text-align:center; letter-spacing: 2px;">控制台</h3>
         <select id="refQSelect" style="padding:10px; border-radius:10px; background:rgba(0,0,0,0.6); color:#fff; border:1px solid rgba(215,179,93,0.5); font-size: 14px; outline: none;"></select>
-        <button class="btn-submit" onclick="refOpenBet()">開放作答</button>
-        <button class="btn-submit" style="background:linear-gradient(135deg, var(--danger), #cc0000); color:#fff; border:none;" onclick="refReveal()">結束下注並結算</button>
+        <button class="btn-submit" style="background:linear-gradient(135deg, #d7b35d, #b8903a); color:#000; border:none; padding: 10px; margin-top: 5px;" onclick="refOpenBet()">開放作答</button>
+        <button class="btn-submit" style="background:linear-gradient(135deg, #ff4444, #cc0000); color:#fff; border:none; padding: 10px; margin-top: 5px;" onclick="refReveal()">結束下注並結算</button>
+        
+        <div style="width: 100%; height: 1px; background: rgba(215, 179, 93, 0.3); margin: 5px 0;"></div>
+        <button class="btn-submit" style="background:linear-gradient(135deg, #d7b35d, #b8903a); color:#000; border:none; padding: 10px; margin-top: 5px;" onclick="refResetGame()">重新開始</button>
+        <button class="btn-submit" style="background:linear-gradient(135deg, #ff4444, #cc0000); color:#fff; border:none; padding: 10px; margin-top: 5px;" onclick="refClearPlayers()">清除所有人員</button>
     </div>
 
     <div class="nav">

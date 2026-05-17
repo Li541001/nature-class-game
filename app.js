@@ -402,6 +402,26 @@ socket.on('sync_state', (state) => {
     updateGameStateUI();
 });
 
+// 收到重新開始指令：強制重整網頁
+socket.on('game_reset', () => {
+    alert('🔄 裁判已重置遊戲！所有籌碼與進度已歸零。');
+    window.location.reload();
+});
+
+// 收到踢人指令：清除瀏覽器記憶並登出
+socket.on('force_kick', () => {
+    if (!AppState.isReferee) {
+        alert('🗑️ 裁判已清除所有玩家紀錄！您已被登出。');
+        // 清除暫存的 UUID 與暱稱
+        sessionStorage.removeItem('nature_park_uuid');
+        sessionStorage.removeItem('nature_park_name');
+        window.location.href = window.location.pathname; // 拔除網址參數並重整
+    } else {
+        alert('✅ 所有玩家已清除完畢，資料庫已清空。');
+        window.location.reload();
+    }
+});
+
 // ==========================================
 // 7. 裁判專用函數 (Referee API)
 // ==========================================
@@ -428,4 +448,21 @@ window.refReveal = function() {
         return;
     }
     socket.emit('referee_reveal_question');
+}
+window.refResetGame = function() {
+    if (confirm('⚠️ 確定要「重新開始」嗎？\n這會將所有人的籌碼恢復為 1000，並清空所有題目與下注紀錄！')) {
+        socket.emit('referee_reset_game');
+    }
+}
+
+window.refClearPlayers = function() {
+    if (confirm('🚨 警告：確定要「清除所有人員」嗎？\n這會將所有玩家踢出遊戲並刪除資料庫，此動作無法復原！')) {
+        // 防呆：要求輸入裁判密碼確認
+        const check = prompt('請輸入密碼「931006」以確認清除：');
+        if (check === '931006') {
+            socket.emit('referee_clear_players');
+        } else if (check !== null) {
+            alert('密碼錯誤，取消清除。');
+        }
+    }
 }
