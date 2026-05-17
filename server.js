@@ -1,18 +1,35 @@
 const express = require('express');
 const http = require('http');
 const { Server } = require('socket.io');
+const mongoose = require('mongoose');
+const dotenv = require('dotenv');
 
 // ==========================================
-// 1. 伺服器初始化
+// 1. 伺服器與資料庫初始化
 // ==========================================
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
 
 app.use(express.static(__dirname));
+dotenv.config();
+
+const MONGO_URI = process.env.MONGO_URI; 
+mongoose.connect(MONGO_URI)
+    .then(() => console.log('✅ MongoDB 連線成功！'))
+    .catch(err => console.error('❌ MongoDB 連線失敗：', err));
+
+const playerSchema = new mongoose.Schema({
+    uuid: { type: String, required: true, unique: true },
+    name: String,
+    chips: { type: Number, default: 1000 },
+    bets: { type: Object, default: {} },
+    locked: { type: Object, default: {} }
+});
+const Player = mongoose.model('Player', playerSchema);
 
 // ==========================================
-// 2. 資料庫與全域狀態 (State Management)
+// 2. 遊戲全域狀態 (記憶體快取)
 // ==========================================
 const questionDB = [
     { category: "地球奇觀區", id: 0, text: "根據圖(一)，深海熱泉生態系的能量來源主要為何？", options: { A: "太陽能", B: "地熱化學能", C: "洋流衝擊" }, answer: "B" },
@@ -21,99 +38,121 @@ const questionDB = [
     { category: "未來環境區", id: 3, text: "登陸月球南極的主要目標是尋找何種重要資源？", options: { A: "黃金礦脈", B: "水冰資源", C: "稀土金屬" }, answer: "B" }
 ];
 
+// 為了保持遊戲極速體驗，依然在記憶體維持一份當前狀態，但數據來源改為 DB
 const gameState = {
     activeQuestionId: null, 
     revealedQuestions: [],  
-    players: {}
+    players: {} // 將從 MongoDB 載入
 };
+
+// 💡 輔助函數：從資料庫同步所有玩家狀態到記憶體
+async function syncPlayersFromDB() {
+    const players = await Player.find({});
+    gameState.players = {};
+    players.forEach(p => {
+        gameState.players[p.uuid] = {
+            name: p.name,
+            chips: p.chips,
+            bets: p.bets,
+            locked: p.locked
+        };
+    });
+    io.emit('sync_state', gameState);
+}
 
 // ==========================================
 // 3. Socket.io 事件監聽與處理
 // ==========================================
 io.on('connection', (socket) => {
     
-    // [連線初始化] 傳送初始題目與狀態給新玩家
     socket.emit('init_game', { questions: questionDB, state: gameState });
 
-    // [玩家加入] 註冊玩家資訊
-    socket.on('join_game', (data) => {
+    // [玩家加入] 
+    socket.on('join_game', async (data) => {
         const { uuid, name } = data;
         
-        // 若為新玩家則初始化資料結構
-        if (!gameState.players[uuid]) {
-            gameState.players[uuid] = { 
-                name: name, 
-                chips: 1000, 
-                bets: {}, 
-                locked: {} 
-            };
+        // 💡 尋找玩家，若無則在 MongoDB 創建新玩家
+        let player = await Player.findOne({ uuid });
+        if (!player) {
+            player = await Player.create({ uuid, name, chips: 1000 });
         }
-        socket.emit('sync_state', gameState);
+        
+        await syncPlayersFromDB(); // 更新畫面
     });
 
-    // [玩家下注] 驗證並鎖定玩家的下注
-    socket.on('lock_bet', (data) => {
+    // [玩家下注] 
+    socket.on('lock_bet', async (data) => {
         const { uuid, qId, bets } = data;
-        const player = gameState.players[uuid];
         
-        // 安全驗證：確保玩家存在、題目開放中，且尚未鎖定
-        if (player && gameState.activeQuestionId === qId && !player.locked[qId]) {
-            player.bets[qId] = bets;
+        if (gameState.activeQuestionId === qId && !gameState.players[uuid]?.locked[qId]) {
             const totalBet = Object.values(bets).reduce((sum, bet) => sum + bet, 0);
             
-            player.chips -= totalBet;
-            player.locked[qId] = true;
+            await Player.findOneAndUpdate(
+                { uuid },
+                { 
+                    $inc: { chips: -totalBet }, // 扣除下注籌碼
+                    $set: { 
+                        [`bets.${qId}`]: bets, 
+                        [`locked.${qId}`]: true 
+                    }
+                }
+            );
             
-            socket.emit('sync_state', gameState); 
+            await syncPlayersFromDB(); // 更新畫面
         }
     });
 
     // ==========================================
     // 4. 裁判專用功能 (Admin Controls)
     // ==========================================
-    
-    // [裁判] 開放特定題目作答
     socket.on('referee_open_question', (qId) => {
         gameState.activeQuestionId = parseInt(qId, 10);
         io.emit('sync_state', gameState);
     });
 
     // [裁判] 結束作答並全域結算
-    socket.on('referee_reveal_question', () => {
+    socket.on('referee_reveal_question', async () => {
         const qId = gameState.activeQuestionId;
         if (qId === null) return;
 
         const question = questionDB.find(q => q.id === qId);
-        if (!question) return;
-
         const correctAnswer = question.answer;
 
-        // 遍歷所有玩家進行結算
-        for (let uuid in gameState.players) {
-            let player = gameState.players[uuid];
-            
-            // 只有確實按下「確認下注」的玩家才給予獎勵計算
-            if (player.locked[qId]) {
+        // 💡 取得所有有下注這題的玩家
+        const players = await Player.find({});
+        
+        // 批次更新玩家的籌碼
+        const bulkUpdates = [];
+        players.forEach(player => {
+            if (player.locked && player.locked[qId]) {
                 let winAmount = player.bets[qId][correctAnswer] || 0;
                 if (winAmount > 0) {
-                    player.chips += (winAmount * 2); // 歸還本金 + 1倍獎金
+                    bulkUpdates.push({
+                        updateOne: {
+                            filter: { uuid: player.uuid },
+                            update: { $inc: { chips: winAmount * 2 } } // 歸還本金 + 1倍獎金
+                        }
+                    });
                 }
             }
+        });
+
+        // 💡 執行批次更新寫入資料庫
+        if (bulkUpdates.length > 0) {
+            await Player.bulkWrite(bulkUpdates);
         }
 
-        // 狀態更新：加入已結算清單並關閉當前題目
         gameState.revealedQuestions.push(qId);
         gameState.activeQuestionId = null; 
 
-        // 廣播給所有客戶端更新畫面
-        io.emit('sync_state', gameState);
+        await syncPlayersFromDB(); // 結算完畢，更新所有人畫面
     });
 });
 
-// ==========================================
-// 5. 啟動伺服器
-// ==========================================
 const PORT = process.env.PORT || 3000;
-server.listen(PORT, () => {
-    console.log(`🌳 伺服器啟動：http://localhost:${PORT}`);
+// 啟動前先載入一次資料庫資料
+syncPlayersFromDB().then(() => {
+    server.listen(PORT, () => {
+        console.log(`🌳 伺服器啟動：http://localhost:${PORT}`);
+    });
 });
