@@ -562,7 +562,7 @@
             width: 100%;
             border-radius: 10px;
             margin-bottom: 12px;
-            aspect-ratio: 16/9;
+            aspect-ratio: 4/3;
             object-fit: cover;
             transition: transform 0.6s ease, filter 0.4s;
             filter: brightness(0.9);
@@ -1297,6 +1297,11 @@
         <button class="btn-submit"
             style="background:linear-gradient(135deg, #ff4444, #cc0000); color:#fff; border:none; padding: 10px; margin-top: 5px;"
             onclick="refReveal()">結束下注並結算</button>
+        <div id="reconnectStatus" style="font-size: 13px; color: var(--muted); text-align: center;">重連模式：關閉</div>
+
+        <button id="btnReconnectMode" class="btn-submit"
+            style="background:linear-gradient(135deg, #777, #333); color:#fff; border:none; padding: 10px; margin-top: 5px;"
+            onclick="refToggleReconnect()">開啟重連</button>
 
         <div style="width: 100%; height: 1px; background: rgba(215, 179, 93, 0.3); margin: 5px 0;"></div>
         <button class="btn-submit"
@@ -1374,14 +1379,14 @@
 
             <div class="img-grid">
                 <div class="img-card reveal-up" style="transition-delay: 0.2s;">
-                    <img src="https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&fit=crop&w=600&q=80"
-                        alt="海洋">
-                    <p>深海熱泉生態系，在無光的環境中依然生機盎然。</p>
+                    <img src="./static/1-1.jpg"
+                        alt="惡地">
+                    <p>月世界惡地地形</p>
                 </div>
-                <div class="img-card reveal-up" style="transition-delay: 0.3s;">
-                    <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=600&q=80"
-                        alt="高山">
-                    <p>高山凍原，植物為了抵禦寒風演化出緊貼地面的型態。</p>
+                <div class="img-card reveal-up" style="transition-delay: 0.2s;">
+                    <img src="./static/1-2.png"
+                        alt="擎天崗">
+                    <p>雖然不是月世界，但有不同種類的火山</p>
                 </div>
             </div>
 
@@ -1409,15 +1414,16 @@
 
             <div class="img-grid">
                 <div class="img-card reveal-up" style="transition-delay: 0.2s;">
-                    <img src="https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&fit=crop&w=600&q=80"
-                        alt="海洋">
-                    <p>深海熱泉生態系，在無光的環境中依然生機盎然。</p>
+                    <img src="./static/2-1.jpg"
+                        alt="濕地">
+                    <p>最平凡不過的濕地，竟然被稱為「地球之腎」</p>
                 </div>
-                <div class="img-card reveal-up" style="transition-delay: 0.3s;">
-                    <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=600&q=80"
-                        alt="高山">
-                    <p>高山凍原，植物為了抵禦寒風演化出緊貼地面的型態。</p>
+                <div class="img-card reveal-up" style="transition-delay: 0.2s;">
+                    <img src="./static/2-2.png"
+                        alt="淡江大橋">
+                    <p>雖然淡江大橋最近爭議很多，但附近也有很多不同的溼地與環境保護區</p>
                 </div>
+                
             </div>
 
             <div class="deco-divider reveal-up" style="transition-delay: 0.35s;"></div>
@@ -1450,14 +1456,14 @@
 
             <div class="img-grid">
                 <div class="img-card reveal-up" style="transition-delay: 0.2s;">
-                    <img src="https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&fit=crop&w=600&q=80"
-                        alt="海洋">
-                    <p>深海熱泉生態系，在無光的環境中依然生機盎然。</p>
+                    <img src="./static/3-1.jpg"
+                        alt="最高學校">
+                    <p>在阿里山國家公園中，全台海拔最高學校</p>
                 </div>
                 <div class="img-card reveal-up" style="transition-delay: 0.3s;">
-                    <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=600&q=80"
-                        alt="高山">
-                    <p>高山凍原，植物為了抵禦寒風演化出緊貼地面的型態。</p>
+                    <img src="./static/3-2.jpg"
+                        alt="巨木群">
+                    <p>千年巨木群</p>
                 </div>
             </div>
 
@@ -1485,14 +1491,8 @@
 
             <div class="img-grid">
                 <div class="img-card reveal-up" style="transition-delay: 0.2s;">
-                    <img src="https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&fit=crop&w=600&q=80"
-                        alt="海洋">
-                    <p>深海熱泉生態系，在無光的環境中依然生機盎然。</p>
-                </div>
-                <div class="img-card reveal-up" style="transition-delay: 0.3s;">
-                    <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=600&q=80"
-                        alt="高山">
-                    <p>高山凍原，植物為了抵禦寒風演化出緊貼地面的型態。</p>
+                    <img src="./static/4.jpg"
+                        alt="瀑布">
                 </div>
             </div>
 
@@ -1526,14 +1526,14 @@
 
             <div class="img-grid">
                 <div class="img-card reveal-up" style="transition-delay: 0.2s;">
-                    <img src="https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&fit=crop&w=600&q=80"
-                        alt="海洋">
-                    <p>深海熱泉生態系，在無光的環境中依然生機盎然。</p>
+                    <img src="./static/5-1.jpg"
+                        alt="桐花公園">
+                    <p>桐花公園大門</p>
                 </div>
                 <div class="img-card reveal-up" style="transition-delay: 0.3s;">
-                    <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=600&q=80"
-                        alt="高山">
-                    <p>高山凍原，植物為了抵禦寒風演化出緊貼地面的型態。</p>
+                    <img src="./static/5-2.jpg"
+                        alt="桐花公園吊橋">
+                    <p>桐花公園的三角吊橋</p>
                 </div>
             </div>
 
@@ -1561,14 +1561,8 @@
 
             <div class="img-grid">
                 <div class="img-card reveal-up" style="transition-delay: 0.2s;">
-                    <img src="https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&fit=crop&w=600&q=80"
-                        alt="海洋">
-                    <p>深海熱泉生態系，在無光的環境中依然生機盎然。</p>
-                </div>
-                <div class="img-card reveal-up" style="transition-delay: 0.3s;">
-                    <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=600&q=80"
-                        alt="高山">
-                    <p>高山凍原，植物為了抵禦寒風演化出緊貼地面的型態。</p>
+                    <img src="./static/6.jpg"
+                        alt="植物園">
                 </div>
             </div>
 
@@ -1640,14 +1634,8 @@
 
             <div class="img-grid">
                 <div class="img-card reveal-up" style="transition-delay: 0.2s;">
-                    <img src="https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&fit=crop&w=600&q=80"
-                        alt="海洋">
-                    <p>深海熱泉生態系，在無光的環境中依然生機盎然。</p>
-                </div>
-                <div class="img-card reveal-up" style="transition-delay: 0.3s;">
-                    <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=600&q=80"
-                        alt="高山">
-                    <p>高山凍原，植物為了抵禦寒風演化出緊貼地面的型態。</p>
+                    <img src="./static/8.jpg"
+                        alt="茶園">
                 </div>
             </div>
 
@@ -1675,14 +1663,8 @@
 
             <div class="img-grid">
                 <div class="img-card reveal-up" style="transition-delay: 0.2s;">
-                    <img src="https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&fit=crop&w=600&q=80"
-                        alt="海洋">
-                    <p>深海熱泉生態系，在無光的環境中依然生機盎然。</p>
-                </div>
-                <div class="img-card reveal-up" style="transition-delay: 0.3s;">
-                    <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=600&q=80"
-                        alt="高山">
-                    <p>高山凍原，植物為了抵禦寒風演化出緊貼地面的型態。</p>
+                    <img src="./static/9.jpg"
+                        alt="香蕉園">
                 </div>
             </div>
 

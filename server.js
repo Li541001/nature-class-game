@@ -64,7 +64,8 @@ const questionDB = [
 const gameState = {
     activeQuestionId: null, 
     revealedQuestions: [],  
-    players: {} // 將從 MongoDB 載入
+    players: {}, // 將從 MongoDB 載入
+    reconnectMode: false // 裁判開啟後，玩家可用相同名稱接回原本資料
 };
 
 // 💡 輔助函數：從資料庫同步所有玩家狀態到記憶體
@@ -82,6 +83,10 @@ async function syncPlayersFromDB() {
     io.emit('sync_state', gameState);
 }
 
+function normalizeName(name) {
+    return String(name || '').trim();
+}
+
 // ==========================================
 // 3. Socket.io 事件監聽與處理
 // ==========================================
@@ -91,16 +96,56 @@ io.on('connection', (socket) => {
 
     // [玩家加入] 
     socket.on('join_game', async (data) => {
-        const { uuid, name } = data;
-        
-        // 💡 尋找玩家，若無則在 MongoDB 創建新玩家
-        let player = await Player.findOne({ uuid });
-        if (!player) {
-            player = await Player.create({ uuid, name, chips: 1000 });
+    const uuid = data?.uuid;
+    const name = normalizeName(data?.name);
+
+    if (!uuid || !name) {
+        socket.emit('join_error', '請輸入有效暱稱。');
+        return;
+    }
+
+    // 1) 原本瀏覽器還保有 UUID：直接接回自己的資料
+    let player = await Player.findOne({ uuid });
+    if (player) {
+        // 如果玩家想改成別人的名稱，要阻擋，避免撞名
+        const duplicatedName = await Player.findOne({
+            name,
+            uuid: { $ne: uuid }
+        });
+
+        if (duplicatedName) {
+            socket.emit('join_error', '此暱稱已被使用');
+            return;
         }
-        
-        await syncPlayersFromDB(); // 更新畫面
-    });
+
+        if (player.name !== name) {
+            player.name = name;
+            await player.save();
+        }
+
+        socket.emit('join_success', { uuid: player.uuid, name: player.name });
+        await syncPlayersFromDB();
+        return;
+    }
+
+    // 2) 沒有 UUID，但輸入了已存在名稱：只有裁判開啟重連模式時才允許接回
+    const existingNamePlayer = await Player.findOne({ name });
+    if (existingNamePlayer) {
+        if (!gameState.reconnectMode) {
+            socket.emit('join_error', '此暱稱已被使用');
+            return;
+        }
+
+        socket.emit('join_success', { uuid: existingNamePlayer.uuid, name: existingNamePlayer.name });
+        await syncPlayersFromDB();
+        return;
+    }
+
+    // 3) 新暱稱：建立新玩家
+    player = await Player.create({ uuid, name, chips: 1000 });
+    socket.emit('join_success', { uuid: player.uuid, name: player.name });
+    await syncPlayersFromDB();
+});
 
     // [玩家下注] 
     socket.on('lock_bet', async (data) => {
@@ -203,6 +248,10 @@ io.on('connection', (socket) => {
         await syncPlayersFromDB();
         io.emit('force_kick'); // 廣播踢人指令
     });
+    socket.on('referee_toggle_reconnect', (isEnabled) => {
+    gameState.reconnectMode = Boolean(isEnabled);
+    io.emit('sync_state', gameState);
+});
 });
 
 const PORT = process.env.PORT || 3000;

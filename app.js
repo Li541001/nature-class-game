@@ -4,7 +4,7 @@ const socket = io();
 // 1. 全域狀態管理 (State Management)
 // ==========================================
 const AppState = {
-    uuid: sessionStorage.getItem('nature_park_uuid'),
+    uuid: localStorage.getItem('nature_park_uuid') || sessionStorage.getItem('nature_park_uuid'),
     isReferee: new URLSearchParams(window.location.search).get('role') === 'referee',
     localChips: 0,
     localBets: {},
@@ -28,12 +28,12 @@ document.addEventListener("DOMContentLoaded", () => {
 function initUUID() {
     if (!AppState.uuid) {
         AppState.uuid = 'uuid_' + Math.random().toString(36).substr(2, 9);
-        sessionStorage.setItem('nature_park_uuid', AppState.uuid);
+        localStorage.setItem('nature_park_uuid', AppState.uuid);
     }
 }
 
 function initAutoLogin() {
-    let myName = sessionStorage.getItem('nature_park_name');
+    let myName = localStorage.getItem('nature_park_name') || sessionStorage.getItem('nature_park_name');
     if (myName && !AppState.isReferee) {
         document.getElementById('loginModal').style.display = 'none';
         document.getElementById('playerInfo').style.display = 'block';
@@ -122,9 +122,6 @@ window.joinGame = function () {
         return;
     }
 
-    sessionStorage.setItem('nature_park_name', input);
-    document.getElementById('loginModal').style.display = 'none';
-    document.getElementById('playerInfo').style.display = 'block';
     socket.emit('join_game', { uuid: AppState.uuid, name: input });
 }
 
@@ -432,6 +429,7 @@ socket.on('init_game', (data) => {
 
 socket.on('sync_state', (state) => {
     AppState.serverState = state;
+    updateReconnectButtonUI();
     updateGameStateUI();
 });
 
@@ -446,6 +444,8 @@ socket.on('force_kick', () => {
     if (!AppState.isReferee) {
         alert('🗑️ 裁判已清除所有玩家紀錄！您已被登出。');
         // 清除暫存的 UUID 與暱稱
+        localStorage.removeItem('nature_park_uuid');
+        localStorage.removeItem('nature_park_name');
         sessionStorage.removeItem('nature_park_uuid');
         sessionStorage.removeItem('nature_park_name');
         window.location.href = window.location.pathname; // 拔除網址參數並重整
@@ -453,6 +453,23 @@ socket.on('force_kick', () => {
         alert('✅ 所有玩家已清除完畢，資料庫已清空。');
         window.location.reload();
     }
+});
+
+socket.on('join_success', (player) => {
+    AppState.uuid = player.uuid;
+    localStorage.setItem('nature_park_uuid', player.uuid);
+    localStorage.setItem('nature_park_name', player.name);
+
+    document.getElementById('loginModal').style.display = 'none';
+    document.getElementById('playerInfo').style.display = 'block';
+});
+
+socket.on('join_error', (message) => {
+    const inputEl = document.getElementById('loginInput');
+    inputEl.style.borderColor = 'var(--danger)';
+    inputEl.style.boxShadow = '0 0 15px rgba(255, 102, 102, 0.6), inset 0 2px 10px rgba(0,0,0,0.5)';
+    inputEl.value = '';
+    inputEl.placeholder = message;
 });
 
 // ==========================================
@@ -497,5 +514,30 @@ window.refClearPlayers = function () {
         } else if (check !== null) {
             alert('密碼錯誤，取消清除。');
         }
+    }
+}
+
+window.refToggleReconnect = function () {
+    const nextValue = !(AppState.serverState && AppState.serverState.reconnectMode);
+    socket.emit('referee_toggle_reconnect', nextValue);
+}
+
+function updateReconnectButtonUI() {
+    const btn = document.getElementById('btnReconnectMode');
+    const status = document.getElementById('reconnectStatus');
+    if (!btn || !status || !AppState.serverState) return;
+
+    if (AppState.serverState.reconnectMode) {
+        btn.innerText = '關閉重連';
+        btn.style.background = 'linear-gradient(135deg, #6bd17c, #2e8b57)';
+        btn.style.color = '#fff';
+        status.innerText = '重連模式：開啟';
+        status.style.color = 'var(--ok)';
+    } else {
+        btn.innerText = '開啟重連';
+        btn.style.background = 'linear-gradient(135deg, #777, #333)';
+        btn.style.color = '#fff';
+        status.innerText = '重連模式：關閉';
+        status.style.color = 'var(--muted)';
     }
 }
