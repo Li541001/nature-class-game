@@ -33,10 +33,10 @@ const Player = mongoose.model('Player', playerSchema);
 // ==========================================
 const questionDB = [
     { category: "引言", id: 0, text: "請問哪位自然環保與人文思維課程老師？", options: { A: "蔡昱宇", B: "蔡煜宇", C: "蔡昱雨 " }, answer: "A" },
-    // { category: "引言", id: 1, text: "請問以下哪些是這次報告的區域？", options: { A: "季節限定區", B: "生態庇護所", C: "氣候調節區" }, answer: "B" },
+    { category: "引言", id: 1, text: "請問以下哪些是這次報告的區域？", options: { A: "季節限定區", B: "生態庇護所", C: "氣候調節區" }, answer: ["B", "C"] },
     { category: "月球登陸計畫", id: 2, text: "月世界的地貌是什麼？", options: { A: "惡地地貌 ", B: "喀斯特地貌", C: "火山地貌" }, answer: "A" },
-    { category: "月球登陸計畫", id: 3, text: "下列何者是今天提到月世界出現的動物？", options: { A: "老鷹", B: "蟒蛇", C: "穿山甲" }, answer: "c" },
-    // { category: "月球登陸計畫", id: 4, text: "月世界的形成的過程？", options: { A: "經由雨水與河水強烈侵蝕", B: "山撥地水土流失與走山", C: "泥沙、泥岩混和經過風化與沉積作用" }, answer: "A" },
+    { category: "月球登陸計畫", id: 3, text: "下列何者是今天提到月世界出現的動物？", options: { A: "老鷹", B: "蟒蛇", C: "穿山甲" }, answer: "C" },
+    { category: "月球登陸計畫", id: 4, text: "月世界的形成的過程？", options: { A: "經由雨水與河水強烈侵蝕", B: "山撥地水土流失與走山", C: "泥沙、泥岩混和經過風化與沉積作用" }, answer: ["A", "C"] },
     { category: "淺入藍碳金庫", id: 5, text: "請問高美濕地有全台最大的...", options: { A: "彰化莞草區", B: "雲林莞草區", C: "嘉義莞草區" }, answer: "B" },
     { category: "淺入藍碳金庫", id: 6, text: "請問高美濕地屬於...", options: { A: "內陸濕地", B: "潮間帶濕地", C: "人工溼地" }, answer: "B" },
     { category: "淺入藍碳金庫", id: 7, text: "下列何者為濕地的功能？", options: { A: "大自然的水力發電廠", B: "大自然的快速排水通道", C: "大自然的濾水系統" }, answer: "C" },
@@ -52,7 +52,7 @@ const questionDB = [
     { category: "生態諾亞方舟", id: 17, text: "下列何者不是今天簡報上方舟溫室群的瀕危植物？", options: { A: "艷紅鹿子百合", B: "桃園石龍尾", C: "長葉茅膏菜" }, answer: "B" },
     { category: "生態諾亞方舟", id: 18, text: "植物園的主要功能是什麼？", options: { A: "用於研究、保育與教育的場所", B: "提供民眾休憩之公園", C: "研發與改良食用農作物產量的農業基地" }, answer: "A" },
     { category: "生態諾亞方舟", id: 19, text: "植物園大約有多少種植物？", options: { A: "4000種", B: "2000種", C: "1000種" }, answer: "C" },
-    // { category: "黃金稻浪畫布", id: 20, text: "請問忘憂谷的綠肥作物有什麼？", options: { A: "油菜花", B: "波斯菊", C: "大花咸豐草" }, answer: "A" },
+    { category: "黃金稻浪畫布", id: 20, text: "請問忘憂谷的綠肥作物有什麼？", options: { A: "油菜花", B: "波斯菊", C: "大花咸豐草" }, answer: ["A", "B"] },
     { category: "黃金稻浪畫布", id: 21, text: "請問忘憂谷的有機米叫什麼？", options: { A: "湖底米", B: "湖中米", C: "逢萊米" }, answer: "A" },
     { category: "黃金稻浪畫布", id: 22, text: "請問什麼樣的耕作方式更適合自然？", options: { A: "順應節氣，不過度使用", B: "一年間不間斷種植", C: "開心時就種，累了就閒置" }, answer: "A" },
     { category: "茶香秘境探險", id: 23, text: "請問穿梭在茶園間的小動物是誰？", options: { A: "台北樹蛙", B: "可達鴨", C: "翡翠樹蛙" }, answer: "A" },
@@ -143,19 +143,25 @@ io.on('connection', (socket) => {
         const question = questionDB.find(q => q.id === qId);
         const correctAnswer = question.answer;
 
-        // 💡 取得所有有下注這題的玩家
+        // ✨ 1. 將單選或多選統一轉換為陣列格式
+        const correctAnswers = Array.isArray(correctAnswer) ? correctAnswer : [correctAnswer];
+
         const players = await Player.find({});
-        
-        // 批次更新玩家的籌碼
         const bulkUpdates = [];
         players.forEach(player => {
             if (player.locked && player.locked[qId]) {
-                let winAmount = player.bets[qId][correctAnswer] || 0;
+                
+                // ✨ 2. 將押在「所有正確選項」上的籌碼加總起來
+                let winAmount = 0;
+                correctAnswers.forEach(ans => {
+                    winAmount += player.bets[qId][ans] || 0;
+                });
+                
                 if (winAmount > 0) {
                     bulkUpdates.push({
                         updateOne: {
                             filter: { uuid: player.uuid },
-                            update: { $inc: { chips: winAmount * 2 } } // 歸還本金 + 1倍獎金
+                            update: { $inc: { chips: winAmount * 2 } } 
                         }
                     });
                 }
