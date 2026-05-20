@@ -41,7 +41,7 @@ const questionDB = [
     { category: "淺入藍碳金庫", id: 6, text: "請問高美濕地屬於...", options: { A: "內陸濕地", B: "潮間帶濕地", C: "人工溼地" }, answer: "B" },
     { category: "淺入藍碳金庫", id: 7, text: "下列何者為濕地的功能？", options: { A: "大自然的水力發電廠", B: "大自然的快速排水通道", C: "大自然的濾水系統" }, answer: "C" },
     { category: "千年呼吸之旅", id: 8, text: "市場上昂貴的扁柏是？", options: { A: "黃檜", B: "黑檜", C: "紅檜" }, answer: "A" },
-    { category: "彩虹水幕秀", id: 9, text: "瀑布的什麼物質對人體有什麼幫助？", options: { A: "活氧", B: "多巴胺", C: "腦內啡", D: "芬多精" }, answer: ["A", "D "] },
+    { category: "彩虹水幕秀", id: 9, text: "瀑布的什麼物質對人體有什麼幫助？", options: { A: "活氧", B: "多巴胺", C: "腦內啡", D: "芬多精" }, answer: ["A", "D"] },
     { category: "彩虹水幕秀", id: 10, text: "這部分的主講者是誰？", options: { A: "陳楷崴", B: "張楷崴", C: "林楷崴" }, answer: "C" },
     { category: "花之星光森林", id: 11, text: "請問螢火蟲幼蟲是什麼食性？", options: { A: "肉食性", B: "草食性", C: "雜食性" }, answer: "A" },
     { category: "花之星光森林", id: 12, text: "油桐花是什麼時期引入台灣的？", options: { A: "日治時期", B: "清朝時期", C: "民國初期" }, answer: "A" },
