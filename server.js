@@ -44,7 +44,7 @@ const questionDB = [
     { category: "彩虹水幕秀", id: 9, text: "瀑布的什麼物質對人體有什麼幫助？", options: { A: "活氧", B: "多巴胺", C: "腦內啡", D: "芬多精" }, answer: ["A", "D"] },
     { category: "彩虹水幕秀", id: 10, text: "這部分的主講者是誰？", options: { A: "陳楷崴", B: "張楷崴", C: "林楷崴" }, answer: "C" },
     { category: "花之星光森林", id: 11, text: "請問螢火蟲幼蟲是什麼食性？", options: { A: "肉食性", B: "草食性", C: "雜食性" }, answer: "A" },
-    { category: "花之星光森林", id: 12, text: "油桐花是什麼時期引入台灣的？", options: { A: "日治時期", B: "清朝時期", C: "民國初期" }, answer: "A" },
+    { category: "花之星光森林", id: 12, text: "油桐花是什麼時期引入台灣的？", options: { A: "日治時期", B: "清朝時期", C: "民國初期" }, answer: "B" },
     { category: "花之星光森林", id: 13, text: "螢火蟲不喜歡以下哪個環境？", options: { A: "無光害", B: "水質乾淨", C: "開闊草地" }, answer: "C" },
     { category: "生態諾亞方舟", id: 14, text: "下列何者不是今天簡報上方舟溫室群的瀕危植物？", options: { A: "艷紅鹿子百合", B: "桃園石龍尾", C: "長葉茅膏菜" }, answer: "B" },
     { category: "生態諾亞方舟", id: 15, text: "植物園的主要功能是什麼？", options: { A: "用於研究、保育與教育的場所", B: "提供民眾休憩之公園", C: "研發與改良食用農作物產量的農業基地" }, answer: "A" },

@@ -508,8 +508,8 @@ window.refResetGame = function () {
 window.refClearPlayers = function () {
     if (confirm('🚨 警告：確定要「清除所有人員」嗎？\n這會將所有玩家踢出遊戲並刪除資料庫，此動作無法復原！')) {
         // 防呆：要求輸入裁判密碼確認
-        const check = prompt('請輸入密碼「931006」以確認清除：');
-        if (check === '931006') {
+        const check = prompt('請輸入密碼「93」以確認清除：');
+        if (check === '93') {
             socket.emit('referee_clear_players');
         } else if (check !== null) {
             alert('密碼錯誤，取消清除。');
