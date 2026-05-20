@@ -52,7 +52,7 @@ const questionDB = [
     { category: "黃金稻浪畫布", id: 17, text: "請問忘憂谷的綠肥作物有什麼？", options: { A: "油菜花", B: "波斯菊", C: "大花咸豐草" }, answer: ["A", "B"] },
     { category: "黃金稻浪畫布", id: 18, text: "請問忘憂谷的有機米叫什麼？", options: { A: "湖底米", B: "湖中米", C: "逢萊米" }, answer: "A" },
     { category: "黃金稻浪畫布", id: 19, text: "請問什麼樣的耕作方式更適合自然？", options: { A: "順應節氣，不過度使用", B: "一年間不間斷種植", C: "開心時就種，累了就閒置" }, answer: "A" },
-    { category: "茶香秘境探險", id: 20, text: "請問穿梭在茶園間的小動物是誰？", options: { A: "台北樹蛙", B: "可達鴨", C: "翡翠樹蛙" }, answer: "A" },
+    { category: "茶香秘境探險", id: 20, text: "請問穿梭在茶園間的小動物是誰？", options: { A: "台北樹蛙", B: "可達鴨", C: "翡翠樹蛙" }, answer: "C" },
     { category: "茶香秘境探險", id: 21, text: "坪林茶園茶園不施農藥與化肥是否正確？", options: { A: "O", B: "X", C: "擎天崗" }, answer: "A" },
     { category: "茶香秘境探險", id: 22, text: "快到尾聲了，請問到目前為止，哪個不是我們有介紹到的地方？", options: { A: "滿月圓", B: "桐花公園", C: "桃源谷" }, answer: "C" },
     { category: "尋找石虎嬌客", id: 23, text: "中寮蕉園是私人土地，不能隨意參觀知道嗎？ ", options: { A: "知道", B: "不知道" }, answer: "A" },

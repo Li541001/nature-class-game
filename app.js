@@ -207,7 +207,7 @@ function renderQuestions() {
                 for (let key in q.options) {
                     optionsHTML += `
                         <div class="option-row" id="opt-row-${q.id}-${key}">
-                            <span>${key}. ${q.options[key]}</span>
+                            <span class="scramble-target" id="opt-text-${q.id}-${key}" data-original="${key}. ${q.options[key]}" data-scrambling="true"></span>
                             <div class="bet-controls">
                                 <button class="btn-circle bet-btn-${q.id}" onclick="changeBet(${q.id}, '${key}', -50)">-</button>
                                 <span class="bet-val" id="bet-${q.id}-${key}">0</span>
@@ -261,6 +261,11 @@ function updateGameStateUI() {
         const resultEl = document.getElementById(`q-result-${q.id}`);
         const betBtns = document.querySelectorAll(`.bet-btn-${q.id}`);
 
+        const optEls = [];
+        for (let key in q.options) {
+            optEls.push(document.getElementById(`opt-text-${q.id}-${key}`));
+        }
+
         let isLocked = myData ? myData.locked[q.id] : false;
         let serverBets = myData ? myData.bets[q.id] : null;
 
@@ -273,6 +278,7 @@ function updateGameStateUI() {
             textEl.dataset.scrambling = "false";
             textEl.innerText = textEl.dataset.original; 
             
+            optEls.forEach(el => { if (el) { el.dataset.scrambling = "false"; el.innerText = el.dataset.original; } });
             toggleBetButtons(betBtns, false);
 
             // ✨ 1. 將多選答案轉為陣列，把它們全部標記為 correct (綠色)
@@ -321,6 +327,8 @@ function updateGameStateUI() {
             textEl.innerText = textEl.dataset.original;
             resultEl.style.display = "none";
 
+            optEls.forEach(el => { if (el) { el.dataset.scrambling = "false"; el.innerText = el.dataset.original; } });
+
             if (isLocked) {
                 card.className = "question-card active locked-bet";
                 setElementStyle(status, "⚠️ 已確認下注", "rgba(215, 179, 93, 0.2)", "var(--gold)");
@@ -346,6 +354,7 @@ function updateGameStateUI() {
             textEl.dataset.scrambling = "true";
             resultEl.style.display = "none";
             toggleBetButtons(betBtns, false);
+            optEls.forEach(el => { if (el) el.dataset.scrambling = "true"; });
         }
     });
 
