@@ -8,7 +8,9 @@
     <link rel="shortcut icon" href="./static/logo.png" type="image/x-icon">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Chiron+GoRound+TC:wght@200..900&family=Chocolate+Classical+Sans&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Chiron+GoRound+TC:wght@200..900&family=Chocolate+Classical+Sans&display=swap"
+        rel="stylesheet">
 
     <style>
         /* ==========================================
@@ -31,278 +33,1283 @@
             --max: 900px;
         }
 
-        * { box-sizing: border-box; }
+        * {
+            box-sizing: border-box;
+        }
 
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: var(--bg0); }
-        ::-webkit-scrollbar-thumb { background: rgba(215, 179, 93, 0.4); border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--gold); }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg0);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(215, 179, 93, 0.4);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--gold);
+        }
 
         body {
-            margin: 0; color: var(--ink); font-family: 'Chiron GoRound TC', sans-serif;
+            margin: 0;
+            color: var(--ink);
+            font-family: 'Chiron GoRound TC', sans-serif;
             background: radial-gradient(1200px 800px at 20% 10%, rgba(215, 179, 93, .08), transparent 55%),
-                        linear-gradient(180deg, var(--bg0), var(--bg1) 40%, #06050a 100%);
-            background-attachment: fixed; overflow-x: hidden; position: relative;
+                linear-gradient(180deg, var(--bg0), var(--bg1) 40%, #06050a 100%);
+            background-attachment: fixed;
+            overflow-x: hidden;
+            position: relative;
         }
 
         body:before {
-            content: ""; position: fixed; inset: 0; pointer-events: none;
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
             background-image: url("https://images.unsplash.com/photo-1528825871115-3581a5387919?auto=format&fit=crop&w=1600&q=60");
-            opacity: .04; mix-blend-mode: overlay; z-index: -1;
+            opacity: .04;
+            mix-blend-mode: overlay;
+            z-index: -1;
         }
 
-        a { color: var(--gold); text-decoration: none; }
+        a {
+            color: var(--gold);
+            text-decoration: none;
+        }
 
         /* ==========================================
            2. 背景裝飾與動畫 (Background Effects)
         ========================================== */
         @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            20%, 60% { transform: translateX(-10px); }
-            40%, 80% { transform: translateX(10px); }
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            20%,
+            60% {
+                transform: translateX(-10px);
+            }
+
+            40%,
+            80% {
+                transform: translateX(10px);
+            }
         }
-        .shake { animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both !important; transition: none !important; }
 
-        .bg-orb-container { position: fixed; inset: 0; overflow: hidden; pointer-events: none; z-index: -1; }
-        .bg-orb { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.2; animation: floatOrb 10s infinite alternate ease-in-out; will-change: transform; transform: translateZ(0); }
-        .orb-1 { width: 300px; height: 300px; background: var(--gold); top: 5%; left: -100px; }
-        .orb-2 { width: 400px; height: 400px; background: var(--gg); top: 40%; right: -150px; animation-delay: -3s; }
-        .orb-3 { width: 350px; height: 350px; background: var(--clay); bottom: 5%; left: 5%; animation-delay: -6s; }
-        @keyframes floatOrb { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(30px, -50px) scale(1.1); } }
+        .shake {
+            animation: shake 0.4s cubic-bezier(.36, .07, .19, .97) both !important;
+            transition: none !important;
+        }
 
-        .particles-container { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
-        .particle { position: absolute; width: 3px; height: 3px; background: var(--gold-light); border-radius: 50%; filter: blur(1px); animation: drift linear infinite; opacity: 0; }
-        .particle:nth-child(1) { left: 15%; animation-duration: 12s; animation-delay: 0s; }
-        .particle:nth-child(2) { left: 45%; animation-duration: 18s; animation-delay: -4s; width: 4px; height: 4px; }
-        .particle:nth-child(3) { left: 80%; animation-duration: 15s; animation-delay: -2s; }
-        .particle:nth-child(4) { left: 30%; animation-duration: 20s; animation-delay: -7s; background: var(--ok); }
-        .particle:nth-child(5) { left: 65%; animation-duration: 14s; animation-delay: -1s; width: 2px; height: 2px; }
-        .particle:nth-child(6) { left: 90%; animation-duration: 16s; animation-delay: -5s; }
-        @keyframes drift { 0% { transform: translateY(100vh) translateX(0); opacity: 0; } 20% { opacity: 0.6; } 80% { opacity: 0.6; } 100% { transform: translateY(-20vh) translateX(50px); opacity: 0; } }
+        .bg-orb-container {
+            position: fixed;
+            inset: 0;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: -1;
+        }
 
-        .reveal-up { opacity: 0; transform: translateY(40px); transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
-        .reveal-up.is-visible { opacity: 1; transform: translate(0, 0); }
+        .bg-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.2;
+            animation: floatOrb 10s infinite alternate ease-in-out;
+            will-change: transform;
+            transform: translateZ(0);
+        }
 
-        .ui-deco-dots { position: absolute; top: 30px; right: 30px; display: flex; gap: 8px; align-items: center; z-index: 10; }
-        .ui-deco-dot { border-radius: 50%; width: 12px; height: 12px; animation: dotBounce 2s ease-in-out infinite alternate; box-shadow: 0 0 8px rgba(255,255,255,0.1); }
-        .ui-deco-dot:nth-child(1) { background: var(--gold); animation-delay: 0s; }
-        .ui-deco-dot:nth-child(2) { background: var(--clay); animation-delay: 0.15s; }
-        .ui-deco-dot:nth-child(3) { background: var(--ok); animation-delay: 0.30s; }
-        .ui-deco-dot:nth-child(4) { background: var(--muted); animation-delay: 0.45s; }
-        .ui-deco-dot:nth-child(5) { background: var(--danger); animation-delay: 0.60s; }
-        @keyframes dotBounce { from { transform: translateY(0); } to { transform: translateY(-7px); } }
+        .orb-1 {
+            width: 300px;
+            height: 300px;
+            background: var(--gold);
+            top: 5%;
+            left: -100px;
+        }
 
-        .deco-divider { height: 1px; width: 100%; background: linear-gradient(90deg, transparent, rgba(215, 179, 93, 0.4), transparent); margin: 40px 0; position: relative; display: flex; justify-content: center; align-items: center; }
-        .deco-divider::after { content: '✦'; position: absolute; color: var(--gold); font-size: 14px; text-shadow: 0 0 10px var(--gold); background: rgba(18, 14, 22, 0.8); padding: 0 15px; backdrop-filter: blur(4px); border-radius: 50%; }
+        .orb-2 {
+            width: 400px;
+            height: 400px;
+            background: var(--gg);
+            top: 40%;
+            right: -150px;
+            animation-delay: -3s;
+        }
+
+        .orb-3 {
+            width: 350px;
+            height: 350px;
+            background: var(--clay);
+            bottom: 5%;
+            left: 5%;
+            animation-delay: -6s;
+        }
+
+        @keyframes floatOrb {
+            0% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            100% {
+                transform: translate(30px, -50px) scale(1.1);
+            }
+        }
+
+        .particles-container {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: var(--gold-light);
+            border-radius: 50%;
+            filter: blur(1px);
+            animation: drift linear infinite;
+            opacity: 0;
+        }
+
+        .particle:nth-child(1) {
+            left: 15%;
+            animation-duration: 12s;
+            animation-delay: 0s;
+        }
+
+        .particle:nth-child(2) {
+            left: 45%;
+            animation-duration: 18s;
+            animation-delay: -4s;
+            width: 4px;
+            height: 4px;
+        }
+
+        .particle:nth-child(3) {
+            left: 80%;
+            animation-duration: 15s;
+            animation-delay: -2s;
+        }
+
+        .particle:nth-child(4) {
+            left: 30%;
+            animation-duration: 20s;
+            animation-delay: -7s;
+            background: var(--ok);
+        }
+
+        .particle:nth-child(5) {
+            left: 65%;
+            animation-duration: 14s;
+            animation-delay: -1s;
+            width: 2px;
+            height: 2px;
+        }
+
+        .particle:nth-child(6) {
+            left: 90%;
+            animation-duration: 16s;
+            animation-delay: -5s;
+        }
+
+        @keyframes drift {
+            0% {
+                transform: translateY(100vh) translateX(0);
+                opacity: 0;
+            }
+
+            20% {
+                opacity: 0.6;
+            }
+
+            80% {
+                opacity: 0.6;
+            }
+
+            100% {
+                transform: translateY(-20vh) translateX(50px);
+                opacity: 0;
+            }
+        }
+
+        .reveal-up {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal-up.is-visible {
+            opacity: 1;
+            transform: translate(0, 0);
+        }
+
+        .ui-deco-dots {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            z-index: 10;
+        }
+
+        .ui-deco-dot {
+            border-radius: 50%;
+            width: 12px;
+            height: 12px;
+            animation: dotBounce 2s ease-in-out infinite alternate;
+            box-shadow: 0 0 8px rgba(255, 255, 255, 0.1);
+        }
+
+        .ui-deco-dot:nth-child(1) {
+            background: var(--gold);
+            animation-delay: 0s;
+        }
+
+        .ui-deco-dot:nth-child(2) {
+            background: var(--clay);
+            animation-delay: 0.15s;
+        }
+
+        .ui-deco-dot:nth-child(3) {
+            background: var(--ok);
+            animation-delay: 0.30s;
+        }
+
+        .ui-deco-dot:nth-child(4) {
+            background: var(--muted);
+            animation-delay: 0.45s;
+        }
+
+        .ui-deco-dot:nth-child(5) {
+            background: var(--danger);
+            animation-delay: 0.60s;
+        }
+
+        @keyframes dotBounce {
+            from {
+                transform: translateY(0);
+            }
+
+            to {
+                transform: translateY(-7px);
+            }
+        }
+
+        .deco-divider {
+            height: 1px;
+            width: 100%;
+            background: linear-gradient(90deg, transparent, rgba(215, 179, 93, 0.4), transparent);
+            margin: 40px 0;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .deco-divider::after {
+            content: '✦';
+            position: absolute;
+            color: var(--gold);
+            font-size: 14px;
+            text-shadow: 0 0 10px var(--gold);
+            background: rgba(18, 14, 22, 0.8);
+            padding: 0 15px;
+            backdrop-filter: blur(4px);
+            border-radius: 50%;
+        }
 
         /* ==========================================
            3. UI 元件 (Components)
         ========================================== */
         /* 導覽列與進度樹 */
-        .nav { position: sticky; top: 0; z-index: 50; padding: 12px 0; backdrop-filter: var(--blur); -webkit-backdrop-filter: var(--blur); background: rgba(14, 11, 18, 0.7); border-bottom: 1px solid var(--stroke); box-shadow: 0 4px 30px rgba(0,0,0,0.5); }
-        .navInner { max-width: var(--max); margin: 0 auto; padding: 0 18px; display: flex; align-items: center; justify-content: space-between; flex-wrap: nowrap; gap: 10px; }
-        .nav-left { display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-        .nav-right { display: flex; align-items: center; gap: 15px; flex-shrink: 1; min-width: 0; }
-        .nav-logo { width: 32px; margin-right: 8px; filter: drop-shadow(0 0 5px rgba(215,179,93,0.5)); }
-        .brand { font-weight: 700; font-size: 18px; background: linear-gradient(135deg, var(--gold-light), var(--gold)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 2px 10px rgba(215,179,93,0.2); }
-        
-        .player-info { font-size: 16px; font-weight: bold; color: var(--gold); background: rgba(0, 0, 0, 0.6); padding: 6px 14px; border-radius: 8px; border: 1px solid var(--stroke); display: block; box-shadow: 0 4px 10px rgba(0,0,0,0.3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .scroll-tree { position: relative; font-size: 26px; line-height: 1; user-select: none; flex-shrink: 0; }
-        .tree-bg { filter: grayscale(1) opacity(0.3); display: block; }
-        .tree-fg { position: absolute; top: 0; left: 0; filter: drop-shadow(0 0 8px rgba(107, 209, 124, 0.6)); clip-path: inset(100% 0 0 0); transition: clip-path 0.2s ease-out; }
+        .nav {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            padding: 12px 0;
+            backdrop-filter: var(--blur);
+            -webkit-backdrop-filter: var(--blur);
+            background: rgba(14, 11, 18, 0.7);
+            border-bottom: 1px solid var(--stroke);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .navInner {
+            max-width: var(--max);
+            margin: 0 auto;
+            padding: 0 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: nowrap;
+            gap: 10px;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-shrink: 1;
+            min-width: 0;
+        }
+
+        .nav-logo {
+            width: 32px;
+            margin-right: 8px;
+            filter: drop-shadow(0 0 5px rgba(215, 179, 93, 0.5));
+        }
+
+        .brand {
+            font-weight: 700;
+            font-size: 18px;
+            background: linear-gradient(135deg, var(--gold-light), var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 10px rgba(215, 179, 93, 0.2);
+        }
+
+        .player-info {
+            font-size: 16px;
+            font-weight: bold;
+            color: var(--gold);
+            background: rgba(0, 0, 0, 0.6);
+            padding: 6px 14px;
+            border-radius: 8px;
+            border: 1px solid var(--stroke);
+            display: block;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .scroll-tree {
+            position: relative;
+            font-size: 26px;
+            line-height: 1;
+            user-select: none;
+            flex-shrink: 0;
+        }
+
+        .tree-bg {
+            filter: grayscale(1) opacity(0.3);
+            display: block;
+        }
+
+        .tree-fg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            filter: drop-shadow(0 0 8px rgba(107, 209, 124, 0.6));
+            clip-path: inset(100% 0 0 0);
+            transition: clip-path 0.2s ease-out;
+        }
 
         /* 排版與區塊 */
-        .wrap { max-width: var(--max); display: flex; justify-content: center; align-items: center; flex-direction: column; margin: 0 auto; padding: 24px 18px 90px }
-        .block1 { color:var(--gold); display: inline-flex; align-items: center; gap: 10px; font-weight: bold; letter-spacing: 0.2em; margin-bottom: 28px; text-shadow: 0 0 15px rgba(215,179,93,0.4); }
-        .block1::before, .block1::after { content: ''; display: block; width: 40px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold)); }
-        .block1::after { background: linear-gradient(270deg, transparent, var(--gold)); }
+        .wrap {
+            max-width: var(--max);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            margin: 0 auto;
+            padding: 24px 18px 90px
+        }
 
-        section { display: flex; flex-direction: column; margin-top: 24px; border-radius: var(--radius2); background: rgba(18, 14, 22, 0.55); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid rgba(215, 179, 93, 0.15); border-top-color: rgba(215, 179, 93, 0.35); border-left-color: rgba(215, 179, 93, 0.25); box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6), inset 0 0 40px rgba(0,0,0,0.3); padding: 35px 30px; scroll-margin-top: 80px; position: relative; overflow: hidden; width: 100%; }
-        section::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(215, 179, 93, 0.6), transparent); }
+        .block1 {
+            color: var(--gold);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: bold;
+            letter-spacing: 0.2em;
+            margin-bottom: 28px;
+            text-shadow: 0 0 15px rgba(215, 179, 93, 0.4);
+        }
 
-        .secTitle { font-size: 32px; margin: 0 0 12px; position: relative; z-index: 2; background: var(--gold-light); -webkit-background-clip: text; -webkit-text-fill-color: transparent; display: inline-block; }
-        .subtitle { display: inline-flex; align-items: center; gap: 8px; color: var(--muted); font-size: 16px; margin: 0 0 0px; position: relative; z-index: 2; letter-spacing: 1px; }
-        .subtitle::before { content: ''; display: block; width: 30px; height: 1px; background: var(--muted); opacity: 0.6; }
+        .block1::before,
+        .block1::after {
+            content: '';
+            display: block;
+            width: 40px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold));
+        }
+
+        .block1::after {
+            background: linear-gradient(270deg, transparent, var(--gold));
+        }
+
+        section {
+            display: flex;
+            flex-direction: column;
+            margin-top: 24px;
+            border-radius: var(--radius2);
+            background: rgba(18, 14, 22, 0.55);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(215, 179, 93, 0.15);
+            border-top-color: rgba(215, 179, 93, 0.35);
+            border-left-color: rgba(215, 179, 93, 0.25);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6), inset 0 0 40px rgba(0, 0, 0, 0.3);
+            padding: 35px 30px;
+            scroll-margin-top: 80px;
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(215, 179, 93, 0.6), transparent);
+        }
+
+        .secTitle {
+            font-size: 32px;
+            margin: 0 0 12px;
+            position: relative;
+            z-index: 2;
+            background: var(--gold-light);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+        }
+
+        .subtitle {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--muted);
+            font-size: 16px;
+            margin: 0 0 0px;
+            position: relative;
+            z-index: 2;
+            letter-spacing: 1px;
+        }
+
+        .subtitle::before {
+            content: '';
+            display: block;
+            width: 30px;
+            height: 1px;
+            background: var(--muted);
+            opacity: 0.6;
+        }
+
+        .justify-text {
+            text-align: justify;
+            /* 文字左右對齊 */
+            text-justify: inter-ideograph;
+            /* 針對中文排版的優化（讓字距更平均） */
+            text-indent: 2em;
+            /* 首行縮排兩個字 */
+            line-height: 1.8;
+            /* 建議加上行高，讓閱讀更舒適 */
+            color: var(--muted);
+            position: relative;
+            z-index: 2;
+            margin-top: 10px;
+            font-size: 17px;
+        }
 
         /* 圖片展區 */
-        .img-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 24px; position: relative; z-index: 2; }
-        .img-card { border-radius: 16px; overflow: hidden; padding: 12px; text-align: center; transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); position: relative; }
-        .img-card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0,0,0,0.5); }
-        .img-card img { width: 100%; border-radius: 10px; margin-bottom: 12px; aspect-ratio: 16/9; object-fit: cover; transition: transform 0.6s ease, filter 0.4s; filter: brightness(0.9); }
-        .img-card:hover img { transform: scale(1.05); filter: brightness(1.1); }
-        .img-card p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.6; padding: 0 8px; text-align: left; }
+        .img-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 24px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .img-card {
+            border-radius: 16px;
+            overflow: hidden;
+            padding: 12px;
+            text-align: center;
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+        }
+
+        .img-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .img-card img {
+            width: 100%;
+            border-radius: 10px;
+            margin-bottom: 12px;
+            aspect-ratio: 16/9;
+            object-fit: cover;
+            transition: transform 0.6s ease, filter 0.4s;
+            filter: brightness(0.9);
+        }
+
+        .img-card:hover img {
+            transform: scale(1.05);
+            filter: brightness(1.1);
+        }
+
+        .img-card p {
+            margin: 0;
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 1.6;
+            padding: 0 8px;
+            text-align: left;
+        }
 
         /* 題目與作答區 (Question Cards) */
-        .category-header { color: var(--gold); font-size: 22px; font-weight: bold; margin: 40px 0 15px 0; border-bottom: 1px solid rgba(215, 179, 93, 0.3); padding-bottom: 10px; letter-spacing: 2px; }
-        .category-header span { color: var(--clay); margin-right: 8px; }
-        .secProblem { position: relative; z-index: 2; padding-top: 10px; display: flex; flex-direction: column;}
-        
-        .question-card { background: rgba(0, 0, 0, .35); backdrop-filter: blur(10px); border: 1px solid rgba(215, 179, 93, 0.15); border-radius: 16px; padding: 55px 24px 24px 24px; margin-top: 16px; transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1); position: relative; overflow: hidden; }
-        .question-card::before { content: ''; position: absolute; left: 0; top: 10%; bottom: 10%; width: 3px; border-radius: 0 4px 4px 0; opacity: 0; transition: 0.3s; }
-        
-        .question-card.disabled { opacity: 0.6; pointer-events: none; filter: grayscale(80%); }
-        .question-card.disabled .q-text { color: var(--muted); font-family: monospace; letter-spacing: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block; width: 100%;}
+        .category-header {
+            color: var(--gold);
+            font-size: 22px;
+            font-weight: bold;
+            margin: 40px 0 15px 0;
+            border-bottom: 1px solid rgba(215, 179, 93, 0.3);
+            padding-bottom: 10px;
+            letter-spacing: 2px;
+        }
+
+        .category-header span {
+            color: var(--clay);
+            margin-right: 8px;
+        }
+
+        .secProblem {
+            position: relative;
+            z-index: 2;
+            padding-top: 10px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .question-card {
+            background: rgba(0, 0, 0, .35);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(215, 179, 93, 0.15);
+            border-radius: 16px;
+            padding: 55px 24px 24px 24px;
+            margin-top: 16px;
+            transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .question-card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 10%;
+            bottom: 10%;
+            width: 3px;
+            border-radius: 0 4px 4px 0;
+            opacity: 0;
+            transition: 0.3s;
+        }
+
+        .question-card.disabled {
+            opacity: 0.6;
+            pointer-events: none;
+            filter: grayscale(80%);
+        }
+
+        .question-card.disabled .q-text {
+            color: var(--muted);
+            font-family: monospace;
+            letter-spacing: 2px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: block;
+            width: 100%;
+        }
 
         @keyframes breathingBorderGreen {
-            0% { box-shadow: 0 0 10px rgba(107, 209, 124, 0.1); border-color: rgba(107, 209, 124, 0.2); }
-            50% { box-shadow: 0 0 25px rgba(107, 209, 124, 0.5), inset 0 0 10px rgba(107, 209, 124, 0.1); border-color: var(--ok); }
-            100% { box-shadow: 0 0 10px rgba(107, 209, 124, 0.1); border-color: rgba(107, 209, 124, 0.2); }
+            0% {
+                box-shadow: 0 0 10px rgba(107, 209, 124, 0.1);
+                border-color: rgba(107, 209, 124, 0.2);
+            }
+
+            50% {
+                box-shadow: 0 0 25px rgba(107, 209, 124, 0.5), inset 0 0 10px rgba(107, 209, 124, 0.1);
+                border-color: var(--ok);
+            }
+
+            100% {
+                box-shadow: 0 0 10px rgba(107, 209, 124, 0.1);
+                border-color: rgba(107, 209, 124, 0.2);
+            }
         }
-        .question-card.active { animation: breathingBorderGreen 2.5s infinite alternate ease-in-out; background: rgba(107, 209, 124, 0.02); }
-        .question-card.active:hover { transform: translateY(-2px); box-shadow: 0 12px 24px rgba(0,0,0,0.4); background: rgba(107, 209, 124, 0.05); }
-        .question-card.active::before { background: var(--ok); }
-        .question-card.active:hover::before { opacity: 1; top: 0; bottom: 0; }
-        
-        .active .q-status { background: rgba(107, 209, 124, 0.1); color: var(--ok); border-color: rgba(107, 209, 124, 0.4); }
 
-        .question-card.error-bet { border-color: var(--danger) !important; box-shadow: 0 0 25px rgba(255, 102, 102, 0.3), inset 0 0 10px rgba(255, 102, 102, 0.1) !important; background: rgba(255, 102, 102, 0.03) !important; animation: none !important; }
-        .question-card.error-bet::before { background: var(--danger) !important; opacity: 1 !important; top: 0 !important; bottom: 0 !important; }
+        .question-card.active {
+            animation: breathingBorderGreen 2.5s infinite alternate ease-in-out;
+            background: rgba(107, 209, 124, 0.02);
+        }
 
-        .question-card.active.locked-bet { border-color: var(--gg); box-shadow: 0 0 20px rgba(255, 200, 97, 0.2); background: rgba(255, 200, 97, 0.02); animation: none; }
-        .question-card.active.locked-bet::before { background: var(--gg); }
-        
-        .question-card.revealed { border-color: var(--gold); animation: none; }
-        .revealed .q-status { background: rgba(215, 179, 93, 0.15); color: var(--gold); border-color: rgba(215, 179, 93, 0.4); }
-        
-        .q-status { position: absolute; top: 15px; right: 15px; font-size: 12px; font-weight: bold; padding: 6px 12px; border-radius: 99px; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255,255,255,0.1); z-index: 5; transition: 0.3s; }
-        .q-text { font-size: 19px; margin-top: 0; font-weight: bold; letter-spacing: 0.5px; color: #fff; padding-right: 0; } 
-        
-        .option-row { display: flex; justify-content: space-between; align-items: center; background: rgba(255, 255, 255, .03); padding: 14px 18px; border-radius: 12px; margin-top: 12px; border: 1px solid rgba(255,255,255,0.05); transition: all 0.3s; }
-        .option-row:hover { background: rgba(255, 255, 255, .08); border-color: rgba(215,179,93,0.3); transform: translateX(4px); }
-        .option-row.correct { border-color: var(--ok); background: rgba(107, 209, 124, .1); box-shadow: inset 0 0 15px rgba(107,209,124,0.1); }
-        .option-row.wrong { opacity: 0.4; filter: grayscale(100%); }
-        
-        .bet-controls { display: flex; align-items: center; gap: 12px; }
-        .btn-circle { width: 34px; height: 34px; border-radius: 50%; border: 1px solid rgba(215,179,93,0.3); background: rgba(215, 179, 93, 0.1); color: var(--gold); cursor: pointer; font-size: 18px; font-weight: bold; transition: 0.3s; display: flex; justify-content: center; align-items: center; }
-        .btn-circle:hover { background: var(--gold); color: #000; transform: scale(1.15); box-shadow: 0 0 10px rgba(215,179,93,0.5); }
-        .bet-val { width: 44px; text-align: center; font-weight: bold; font-size: 18px; color: var(--gold-light); text-shadow: 0 0 8px rgba(215,179,93,0.4); }
-        
-        .btn-submit { position: relative; overflow: hidden; width: 100%; padding: 16px; border-radius: 14px; border: 1px solid rgba(255,255,255,0.2); background: linear-gradient(135deg, rgba(215, 179, 93, 0.9), rgba(184, 144, 58, 0.7)); color: #000; font-weight: 900; font-size: 16px; letter-spacing: 2px; margin-top: 20px; cursor: pointer; transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1); box-shadow: 0 6px 15px rgba(0,0,0,0.3); z-index: 1; }
-        .btn-submit::after { content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent); transform: skewX(-20deg); z-index: -1; transition: 0s; }
-        @keyframes sweepingShine { 0% { left: -100%; } 100% { left: 200%; } }
-        .btn-submit:hover:not(:disabled) { transform: translateY(-3px); box-shadow: 0 12px 20px rgba(215,179,93,0.4); filter: brightness(1.1); }
-        .btn-submit:hover:not(:disabled)::after { animation: sweepingShine 1.5s ease-in-out infinite; }
-        .btn-submit:active:not(:disabled) { transform: translateY(2px) scale(0.96); box-shadow: 0 2px 5px rgba(0,0,0,0.5); filter: brightness(0.9); }
-        .btn-submit:disabled { background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.3); border-color: transparent; cursor: not-allowed; box-shadow: none; transform: none; }
+        .question-card.active:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
+            background: rgba(107, 209, 124, 0.05);
+        }
+
+        .question-card.active::before {
+            background: var(--ok);
+        }
+
+        .question-card.active:hover::before {
+            opacity: 1;
+            top: 0;
+            bottom: 0;
+        }
+
+        .active .q-status {
+            background: rgba(107, 209, 124, 0.1);
+            color: var(--ok);
+            border-color: rgba(107, 209, 124, 0.4);
+        }
+
+        .question-card.error-bet {
+            border-color: var(--danger) !important;
+            box-shadow: 0 0 25px rgba(255, 102, 102, 0.3), inset 0 0 10px rgba(255, 102, 102, 0.1) !important;
+            background: rgba(255, 102, 102, 0.03) !important;
+            animation: none !important;
+        }
+
+        .question-card.error-bet::before {
+            background: var(--danger) !important;
+            opacity: 1 !important;
+            top: 0 !important;
+            bottom: 0 !important;
+        }
+
+        .question-card.active.locked-bet {
+            border-color: var(--gg);
+            box-shadow: 0 0 20px rgba(255, 200, 97, 0.2);
+            background: rgba(255, 200, 97, 0.02);
+            animation: none;
+        }
+
+        .question-card.active.locked-bet::before {
+            background: var(--gg);
+        }
+
+        .question-card.revealed {
+            border-color: var(--gold);
+            animation: none;
+        }
+
+        .revealed .q-status {
+            background: rgba(215, 179, 93, 0.15);
+            color: var(--gold);
+            border-color: rgba(215, 179, 93, 0.4);
+        }
+
+        .q-status {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 12px;
+            font-weight: bold;
+            padding: 6px 12px;
+            border-radius: 99px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 5;
+            transition: 0.3s;
+        }
+
+        .q-text {
+            font-size: 19px;
+            margin-top: 0;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+            color: #fff;
+            padding-right: 0;
+        }
+
+        .option-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, .03);
+            padding: 14px 18px;
+            border-radius: 12px;
+            margin-top: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s;
+        }
+
+        .option-row:hover {
+            background: rgba(255, 255, 255, .08);
+            border-color: rgba(215, 179, 93, 0.3);
+            transform: translateX(4px);
+        }
+
+        .option-row.correct {
+            border-color: var(--ok);
+            background: rgba(107, 209, 124, .1);
+            box-shadow: inset 0 0 15px rgba(107, 209, 124, 0.1);
+        }
+
+        .option-row.wrong {
+            opacity: 0.4;
+            filter: grayscale(100%);
+        }
+
+        .bet-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .btn-circle {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            border: 1px solid rgba(215, 179, 93, 0.3);
+            background: rgba(215, 179, 93, 0.1);
+            color: var(--gold);
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
+            transition: 0.3s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .btn-circle:hover {
+            background: var(--gold);
+            color: #000;
+            transform: scale(1.15);
+            box-shadow: 0 0 10px rgba(215, 179, 93, 0.5);
+        }
+
+        .bet-val {
+            width: 44px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 18px;
+            color: var(--gold-light);
+            text-shadow: 0 0 8px rgba(215, 179, 93, 0.4);
+        }
+
+        .btn-submit {
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            padding: 16px;
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: linear-gradient(135deg, rgba(215, 179, 93, 0.9), rgba(184, 144, 58, 0.7));
+            color: #000;
+            font-weight: 900;
+            font-size: 16px;
+            letter-spacing: 2px;
+            margin-top: 20px;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+            z-index: 1;
+        }
+
+        .btn-submit::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+            transform: skewX(-20deg);
+            z-index: -1;
+            transition: 0s;
+        }
+
+        @keyframes sweepingShine {
+            0% {
+                left: -100%;
+            }
+
+            100% {
+                left: 200%;
+            }
+        }
+
+        .btn-submit:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 20px rgba(215, 179, 93, 0.4);
+            filter: brightness(1.1);
+        }
+
+        .btn-submit:hover:not(:disabled)::after {
+            animation: sweepingShine 1.5s ease-in-out infinite;
+        }
+
+        .btn-submit:active:not(:disabled) {
+            transform: translateY(2px) scale(0.96);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+            filter: brightness(0.9);
+        }
+
+        .btn-submit:disabled {
+            background: rgba(255, 255, 255, 0.05);
+            color: rgba(255, 255, 255, 0.3);
+            border-color: transparent;
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
+        }
 
         /* 排名按鈕特規 */
-        .btn-rank { position: relative; overflow: hidden; width: 50px; padding: 4px; border-radius: 5px; border: 1px solid rgba(255,255,255,0.2); background: linear-gradient(135deg, rgba(215, 179, 93, 0.9), rgba(184, 144, 58, 0.7)); color: #000; font-weight: 900; font-size: 11px; cursor: pointer; transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1); box-shadow: 0 6px 15px rgba(0,0,0,0.3); z-index: 1; }
-        .btn-rank::after { content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent); transform: skewX(-20deg); z-index: -1; transition: 0s; }
-        .btn-rank:hover:not(:disabled) { transform: translateY(-3px); box-shadow: 0 12px 20px rgba(215,179,93,0.4); filter: brightness(1.1); }
-        .btn-rank:hover:not(:disabled)::after { animation: sweepingShine 1.5s ease-in-out infinite; }
-        .btn-rank:active:not(:disabled) { transform: translateY(2px) scale(0.96); box-shadow: 0 2px 5px rgba(0,0,0,0.5); filter: brightness(0.9); }
+        .btn-rank {
+            position: relative;
+            overflow: hidden;
+            width: 50px;
+            padding: 4px;
+            border-radius: 5px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: linear-gradient(135deg, rgba(215, 179, 93, 0.9), rgba(184, 144, 58, 0.7));
+            color: #000;
+            font-weight: 900;
+            font-size: 11px;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+            z-index: 1;
+        }
+
+        .btn-rank::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+            transform: skewX(-20deg);
+            z-index: -1;
+            transition: 0s;
+        }
+
+        .btn-rank:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 20px rgba(215, 179, 93, 0.4);
+            filter: brightness(1.1);
+        }
+
+        .btn-rank:hover:not(:disabled)::after {
+            animation: sweepingShine 1.5s ease-in-out infinite;
+        }
+
+        .btn-rank:active:not(:disabled) {
+            transform: translateY(2px) scale(0.96);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+            filter: brightness(0.9);
+        }
 
         /* ==========================================
            4. 覆蓋層與彈窗 (Modals)
         ========================================== */
         /* 登入介面 */
-        #loginModal { position: fixed; inset: 0; background: rgba(7, 6, 10, 0.75); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; overflow: hidden; }
-        .login-glow { position: absolute; width: 120vw; height: 120vh; background: radial-gradient(circle at 50% 50%, rgba(215, 179, 93, 0.1) 0%, rgba(107, 209, 124, 0.05) 40%, transparent 70%); animation: pulseGlow 8s infinite alternate ease-in-out; z-index: 0; pointer-events: none; }
-        @keyframes pulseGlow { 0% { transform: scale(1); } 100% { transform: scale(1.1); } }
+        #loginModal {
+            position: fixed;
+            inset: 0;
+            background: rgba(7, 6, 10, 0.75);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
 
-        .login-card { position: relative; z-index: 10; padding: 60px 50px; width: 90%; max-width: 440px; background: linear-gradient(145deg, rgba(25, 20, 28, 0.85), rgba(12, 9, 15, 0.95)); border-radius: 32px; border: 1px solid rgba(215, 179, 93, 0.2); box-shadow: 0 30px 60px rgba(0,0,0,0.8), inset 0 2px 0 rgba(215, 179, 93, 0.2); text-align: center; opacity: 0; transform: translateY(40px) scale(0.95); animation: modalEnterRefined 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; animation-delay: 0.1s; }
-        @keyframes modalEnterRefined { to { opacity: 1; transform: translateY(0) scale(1); } }
+        .login-glow {
+            position: absolute;
+            width: 120vw;
+            height: 120vh;
+            background: radial-gradient(circle at 50% 50%, rgba(215, 179, 93, 0.1) 0%, rgba(107, 209, 124, 0.05) 40%, transparent 70%);
+            animation: pulseGlow 8s infinite alternate ease-in-out;
+            z-index: 0;
+            pointer-events: none;
+        }
 
-        .login-deco-line { width: 60px; height: 3px; background: linear-gradient(90deg, transparent, var(--gold), transparent); margin: 20px auto 30px; border-radius: 2px; }
+        @keyframes pulseGlow {
+            0% {
+                transform: scale(1);
+            }
 
-        .login-card > * { opacity: 0; animation: fadeUpSoft 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-        .login-card > *:nth-child(1) { animation-delay: 0.2s; }
-        .login-card > *:nth-child(2) { animation-delay: 0.3s; }
-        .login-card > *:nth-child(3) { animation-delay: 0.4s; }
-        .login-card > *:nth-child(4) { animation-delay: 0.5s; }
-        .login-card > *:nth-child(5) { animation-delay: 0.6s; }
-        .login-card > *:nth-child(6) { animation-delay: 0.7s; }
-        @keyframes fadeUpSoft { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+            100% {
+                transform: scale(1.1);
+            }
+        }
 
-        .login-input { padding: 18px 24px; border-radius: 16px; border: 1px solid rgba(215,179,93,0.2); background: rgba(0,0,0,0.4); color: #fff; font-size: 17px; width: 100%; margin-bottom: 30px; text-align: center; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); box-shadow: inset 0 2px 10px rgba(0,0,0,0.5); }
-        .login-input::placeholder { color: rgba(207, 199, 181, 0.5); letter-spacing: 2px; font-size: 14px;}
-        .login-input:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 20px rgba(215, 179, 93, 0.2), inset 0 2px 10px rgba(0,0,0,0.5); background: rgba(0,0,0,0.6); transform: translateY(-2px); }
+        .login-card {
+            position: relative;
+            z-index: 10;
+            padding: 60px 50px;
+            width: 90%;
+            max-width: 440px;
+            background: linear-gradient(145deg, rgba(25, 20, 28, 0.85), rgba(12, 9, 15, 0.95));
+            border-radius: 32px;
+            border: 1px solid rgba(215, 179, 93, 0.2);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8), inset 0 2px 0 rgba(215, 179, 93, 0.2);
+            text-align: center;
+            opacity: 0;
+            transform: translateY(40px) scale(0.95);
+            animation: modalEnterRefined 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation-delay: 0.1s;
+        }
+
+        @keyframes modalEnterRefined {
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .login-deco-line {
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            margin: 20px auto 30px;
+            border-radius: 2px;
+        }
+
+        .login-card>* {
+            opacity: 0;
+            animation: fadeUpSoft 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .login-card>*:nth-child(1) {
+            animation-delay: 0.2s;
+        }
+
+        .login-card>*:nth-child(2) {
+            animation-delay: 0.3s;
+        }
+
+        .login-card>*:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        .login-card>*:nth-child(4) {
+            animation-delay: 0.5s;
+        }
+
+        .login-card>*:nth-child(5) {
+            animation-delay: 0.6s;
+        }
+
+        .login-card>*:nth-child(6) {
+            animation-delay: 0.7s;
+        }
+
+        @keyframes fadeUpSoft {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .login-input {
+            padding: 18px 24px;
+            border-radius: 16px;
+            border: 1px solid rgba(215, 179, 93, 0.2);
+            background: rgba(0, 0, 0, 0.4);
+            color: #fff;
+            font-size: 17px;
+            width: 100%;
+            margin-bottom: 30px;
+            text-align: center;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .login-input::placeholder {
+            color: rgba(207, 199, 181, 0.5);
+            letter-spacing: 2px;
+            font-size: 14px;
+        }
+
+        .login-input:focus {
+            outline: none;
+            border-color: var(--gold);
+            box-shadow: 0 0 20px rgba(215, 179, 93, 0.2), inset 0 2px 10px rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.6);
+            transform: translateY(-2px);
+        }
 
         /* 排行榜彈窗 */
-        #leaderboardModal { display: none; position: fixed; inset: 0; background: rgba(7, 6, 10, 0.85); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); z-index: 10000; flex-direction: column; align-items: center; justify-content: center; overflow: hidden; }
-        .rank-item { display: flex; justify-content: space-between; align-items: center; padding: 14px 20px; margin-bottom: 10px; background: rgba(255, 255, 255, 0.05); border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); font-size: 16px; transition: 0.3s;}
-        .rank-item:hover { background: rgba(255, 255, 255, 0.1); }
-        .rank-item.rank-1 { background: rgba(215, 179, 93, 0.15); border-color: var(--gold); box-shadow: 0 0 15px rgba(215,179,93,0.3);}
-        .rank-item.rank-2 { background: rgba(204, 204, 204, 0.15); border-color: #ccc; }
-        .rank-item.rank-3 { background: rgba(176, 122, 90, 0.15); border-color: var(--clay); }
+        #leaderboardModal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(7, 6, 10, 0.85);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            z-index: 10000;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .rank-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 20px;
+            margin-bottom: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 16px;
+            transition: 0.3s;
+        }
+
+        .rank-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .rank-item.rank-1 {
+            background: rgba(215, 179, 93, 0.15);
+            border-color: var(--gold);
+            box-shadow: 0 0 15px rgba(215, 179, 93, 0.3);
+        }
+
+        .rank-item.rank-2 {
+            background: rgba(204, 204, 204, 0.15);
+            border-color: #ccc;
+        }
+
+        .rank-item.rank-3 {
+            background: rgba(176, 122, 90, 0.15);
+            border-color: var(--clay);
+        }
 
         /* 裁判控制台 */
-        .refPanel { position: fixed; bottom: 20px; right: 20px; background: rgba(22, 17, 28, 0.95); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); padding: 20px; border: 1px solid var(--gold); border-radius: 16px; z-index: 9999; display: none; flex-direction: column; gap: 12px; box-shadow: 0 15px 40px rgba(0,0,0,0.6); }
+        .refPanel {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(22, 17, 28, 0.95);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            padding: 20px;
+            border: 1px solid var(--gold);
+            border-radius: 16px;
+            z-index: 9999;
+            display: none;
+            flex-direction: column;
+            gap: 12px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+        }
 
         /* ==========================================
            5. 響應式佈局 (Mobile RWD)
         ========================================== */
         @media (max-width: 600px) {
-            .navInner { padding: 0 10px; gap: 5px; }
-            .nav-logo { width: 22px; margin-right: 5px; }
-            .brand { font-size: 14px; }
-            .nav-right { gap: 6px; }
-            .player-info { font-size: 11px; padding: 4px 6px; letter-spacing: 0; max-width: none; }
-            .scroll-tree { font-size: 18px; }
-            .block1 { font-size: 20px; margin-bottom: 20px; }
-            .secTitle { font-size: 24px; }
-            .subtitle { font-size: 13px; }
-            .question-card { padding: 45px 15px 15px 15px; } 
-            .q-status { top: 10px; right: 10px; padding: 4px 8px; font-size: 11px; }
-            .q-text { font-size: 16px; line-height: 1.4; }
-            .option-row { flex-direction: column; align-items: flex-start; gap: 12px; padding: 12px; }
-            .bet-controls { width: 100%; justify-content: flex-end; }
-            #loginModal .login-card { padding: 40px 20px; width: 90%; }
-            #loginModal .secTitle { font-size: 28px !important; }
-            .login-input { font-size: 15px; width: 100%; max-width: 100%; padding: 14px 16px;}
+            .navInner {
+                padding: 0 10px;
+                gap: 5px;
+            }
+
+            .nav-logo {
+                width: 22px;
+                margin-right: 5px;
+            }
+
+            .brand {
+                font-size: 14px;
+            }
+
+            .nav-right {
+                gap: 6px;
+            }
+
+            .player-info {
+                font-size: 11px;
+                padding: 4px 6px;
+                letter-spacing: 0;
+                max-width: none;
+            }
+
+            .scroll-tree {
+                font-size: 18px;
+            }
+
+            .block1 {
+                font-size: 20px;
+                margin-bottom: 20px;
+            }
+
+            .secTitle {
+                font-size: 24px;
+            }
+
+            .subtitle {
+                font-size: 13px;
+            }
+
+            .question-card {
+                padding: 45px 15px 15px 15px;
+            }
+
+            .q-status {
+                top: 10px;
+                right: 10px;
+                padding: 4px 8px;
+                font-size: 11px;
+            }
+
+            .q-text {
+                font-size: 16px;
+                line-height: 1.4;
+            }
+
+            .option-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+                padding: 12px;
+            }
+
+            .bet-controls {
+                width: 100%;
+                justify-content: flex-end;
+            }
+
+            #loginModal .login-card {
+                padding: 40px 20px;
+                width: 90%;
+            }
+
+            #loginModal .secTitle {
+                font-size: 28px !important;
+            }
+
+            .login-input {
+                font-size: 15px;
+                width: 100%;
+                max-width: 100%;
+                padding: 14px 16px;
+            }
         }
     </style>
 </head>
 
 <body>
-    <div class="bg-orb-container" aria-hidden="true"><div class="bg-orb orb-1"></div><div class="bg-orb orb-2"></div><div class="bg-orb orb-3"></div></div>
-    <div class="particles-container" aria-hidden="true"><div class="particle"></div><div class="particle"></div><div class="particle"></div><div class="particle"></div><div class="particle"></div><div class="particle"></div></div>
+    <div class="bg-orb-container" aria-hidden="true">
+        <div class="bg-orb orb-1"></div>
+        <div class="bg-orb orb-2"></div>
+        <div class="bg-orb orb-3"></div>
+    </div>
+    <div class="particles-container" aria-hidden="true">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
 
     <div id="loginModal">
         <div class="login-glow"></div>
         <div class="login-card">
-            <div style="font-size: 42px; margin-bottom: 10px; filter: drop-shadow(0 0 10px rgba(215,179,93,0.5));">🌿</div>
+            <div style="font-size: 42px; margin-bottom: 10px; filter: drop-shadow(0 0 10px rgba(215,179,93,0.5));">🌿
+            </div>
             <h1 class="secTitle" style="font-size:36px; margin-bottom: 0; letter-spacing: 4px;">大自然遊樂園</h1>
             <div class="login-deco-line"></div>
-            <p style="color:var(--muted); margin-bottom: 35px; font-weight: 500; letter-spacing: 2px; font-size: 15px;">— 請輸入您的暱稱 —</p>
-            
+            <p style="color:var(--muted); margin-bottom: 35px; font-weight: 500; letter-spacing: 2px; font-size: 15px;">
+                — 請輸入您的暱稱 —</p>
+
             <input type="text" id="loginInput" class="login-input" placeholder="輸入暱稱" autocomplete="off">
-            <button class="btn-submit" style="margin-top: 0; border-radius: 16px; padding: 18px; font-size: 18px;" onclick="joinGame()">確認</button>
+            <button class="btn-submit" style="margin-top: 0; border-radius: 16px; padding: 18px; font-size: 18px;"
+                onclick="joinGame()">確認</button>
         </div>
     </div>
 
     <div id="leaderboardModal">
         <div class="login-glow"></div>
-        <div class="particles-container" aria-hidden="true"><div class="particle"></div><div class="particle"></div><div class="particle"></div></div>
-        <div class="login-card" style="padding: 40px 30px; width: 90%; max-width: 500px; max-height: 85vh; overflow-y: auto;">
+        <div class="particles-container" aria-hidden="true">
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+        </div>
+        <div class="login-card"
+            style="padding: 40px 30px; width: 90%; max-width: 500px; max-height: 85vh; overflow-y: auto;">
             <h1 class="secTitle" style="font-size:32px; margin-bottom: 5px; letter-spacing: 2px;">排行榜</h1>
             <div class="login-deco-line"></div>
             <ul id="leaderboardList" style="list-style: none; padding: 0; margin: 0; text-align: left;"></ul>
-            <button class="btn-submit" style="margin-top: 25px; border-radius: 12px; padding: 14px;" onclick="document.getElementById('leaderboardModal').style.display='none'">關閉</button>
+            <button class="btn-submit" style="margin-top: 25px; border-radius: 12px; padding: 14px;"
+                onclick="document.getElementById('leaderboardModal').style.display='none'">關閉</button>
         </div>
     </div>
 
     <div class="refPanel" id="refPanel">
         <h3 style="margin:0; color:var(--gold); text-align:center; letter-spacing: 2px;">控制台</h3>
-        <select id="refQSelect" style="padding:10px; border-radius:10px; background:rgba(0,0,0,0.6); color:#fff; border:1px solid rgba(215,179,93,0.5); font-size: 14px; outline: none;"></select>
-        <button class="btn-submit" style="background:linear-gradient(135deg, #d7b35d, #b8903a); color:#000; border:none; padding: 10px; margin-top: 5px;" onclick="refOpenBet()">開放作答</button>
-        <button class="btn-submit" style="background:linear-gradient(135deg, #ff4444, #cc0000); color:#fff; border:none; padding: 10px; margin-top: 5px;" onclick="refReveal()">結束下注並結算</button>
-        
+        <select id="refQSelect"
+            style="padding:10px; border-radius:10px; background:rgba(0,0,0,0.6); color:#fff; border:1px solid rgba(215,179,93,0.5); font-size: 14px; outline: none;"></select>
+        <button class="btn-submit"
+            style="background:linear-gradient(135deg, #d7b35d, #b8903a); color:#000; border:none; padding: 10px; margin-top: 5px;"
+            onclick="refOpenBet()">開放作答</button>
+        <button class="btn-submit"
+            style="background:linear-gradient(135deg, #ff4444, #cc0000); color:#fff; border:none; padding: 10px; margin-top: 5px;"
+            onclick="refReveal()">結束下注並結算</button>
+
         <div style="width: 100%; height: 1px; background: rgba(215, 179, 93, 0.3); margin: 5px 0;"></div>
-        <button class="btn-submit" style="background:linear-gradient(135deg, #d7b35d, #b8903a); color:#000; border:none; padding: 10px; margin-top: 5px;" onclick="refResetGame()">重新開始</button>
-        <button class="btn-submit" style="background:linear-gradient(135deg, #ff4444, #cc0000); color:#fff; border:none; padding: 10px; margin-top: 5px;" onclick="refClearPlayers()">清除所有人員</button>
+        <button class="btn-submit"
+            style="background:linear-gradient(135deg, #d7b35d, #b8903a); color:#000; border:none; padding: 10px; margin-top: 5px;"
+            onclick="refResetGame()">重新開始</button>
+        <button class="btn-submit"
+            style="background:linear-gradient(135deg, #ff4444, #cc0000); color:#fff; border:none; padding: 10px; margin-top: 5px;"
+            onclick="refClearPlayers()">清除所有人員</button>
     </div>
 
     <div class="nav">
         <div class="navInner">
             <div class="nav-left">
-                <img class="nav-logo" src="./static/logo.png" alt="logo" onerror="this.style.display='none'"/>
+                <img class="nav-logo" src="./static/logo.png" alt="logo" onerror="this.style.display='none'" />
                 <div class="brand">大自然遊樂園</div>
             </div>
             <div class="nav-right">
-                <button class="btn-rank" id="btn-leaderboard" onclick="document.getElementById('leaderboardModal').style.display='flex'" style="display:none; cursor: pointer; background: rgba(215, 179, 93, 0.15); border-color: var(--gold); color: var(--gold);">排名</button>
+                <button class="btn-rank" id="btn-leaderboard"
+                    onclick="document.getElementById('leaderboardModal').style.display='flex'"
+                    style="display:none; cursor: pointer; background: rgba(215, 179, 93, 0.15); border-color: var(--gold); color: var(--gold);">排名</button>
                 <div class="player-info" id="playerInfo" style="display: none;">
-                    名稱： <span id="playerName"></span> &nbsp;|&nbsp; 錢： <span id="playerChips">1000</span> &nbsp;|&nbsp; 🏆第 <span id="playerRank">-</span> 名
+                    名稱： <span id="playerName"></span> &nbsp;|&nbsp; 錢： <span id="playerChips">1000</span> &nbsp;|&nbsp;
+                    🏆第 <span id="playerRank">-</span> 名
                 </div>
                 <div class="scroll-tree" title="網頁探索進度">
                     <span class="tree-bg">🌳</span>
@@ -312,39 +1319,375 @@
         </div>
     </div>
 
+    <!-- 引言 -->
     <div class="wrap">
-        <h1 class="block1 reveal-up">地球奇觀區</h1>
-        
-        <section id="section1" class="reveal-up" style="transition-delay: 0.1s;">
-            <div class="ui-deco-dots" aria-hidden="true"><div class="ui-deco-dot"></div><div class="ui-deco-dot"></div><div class="ui-deco-dot"></div><div class="ui-deco-dot"></div><div class="ui-deco-dot"></div></div>
-            <h1 class="secTitle">月球登陸計畫</h1>
-            <p class="subtitle" style="margin-bottom: 15px;">探索大自然最神秘的角落，從深海到宇宙</p>
-            <p style="line-height: 1.8; color: var(--muted); position: relative; z-index: 2; margin-top: 10px; font-size: 17px;">
-                歡迎來到地球奇觀區。在這裡，我們將帶領各位認識地球上最極端的環境。<br>請仔細觀察下方的生態圖集，這將有助於你在稍後的挑戰區中獲得勝利。
-            </p>
-            
-            <div class="img-grid">
-                <div class="img-card reveal-up" style="transition-delay: 0.2s;">
-                    <img src="https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&fit=crop&w=600&q=80" alt="海洋">
-                    <p>深海熱泉生態系，在無光的環境中依然生機盎然。</p>
-                </div>
-                <div class="img-card reveal-up" style="transition-delay: 0.3s;">
-                    <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=600&q=80" alt="高山">
-                    <p>高山凍原，植物為了抵禦寒風演化出緊貼地面的型態。</p>
-                </div>
+        <h1 class="block1 reveal-up">引言</h1>
+
+        <section id="section-0" class="reveal-up" style="transition-delay: 0.1s;">
+            <div class="ui-deco-dots" aria-hidden="true">
+                <div class="ui-deco-dot"></div>
+                <div class="ui-deco-dot"></div>
+                <div class="ui-deco-dot"></div>
+                <div class="ui-deco-dot"></div>
+                <div class="ui-deco-dot"></div>
             </div>
-            
+            <p class="justify-text">歡迎大家來到自然遊樂園！今天將帶大家探索四個區域：地球奇觀區、氣候調節區、生態庇護所，以及里山美食街。</p>
+            <p class="justify-text">讓我們一同進入自然的世界，與他們成為朋友，找尋和平相處的方式，認識這片土地上最珍貴的生態寶藏！各位玩家，準備好你們的好奇心與籌碼，樂園的大門即將開啟，我們出發吧！</p>
             <div class="deco-divider reveal-up" style="transition-delay: 0.35s;"></div>
 
             <div class="secProblem reveal-up" style="transition-delay: 0.4s;">
                 <h1 class="secTitle">賭博時間</h1>
                 <p class="subtitle">請等待開放題目，下注後請點擊確認下注</p>
-                <div id="questions-container" style="margin-top: 20px;"></div>
+                <div id="cat-引言" style="margin-top: 20px;"></div>
             </div>
         </section>
     </div>
-    
+
+    <!-- 1. 地球奇觀區 -->
+    <div class="wrap">
+        <h1 class="block1 reveal-up">地球奇觀區</h1>
+
+        <section id="section-0" class="reveal-up" style="transition-delay: 0.1s;">
+            <div class="ui-deco-dots" aria-hidden="true">
+                <div class="ui-deco-dot"></div>
+                <div class="ui-deco-dot"></div>
+                <div class="ui-deco-dot"></div>
+                <div class="ui-deco-dot"></div>
+                <div class="ui-deco-dot"></div>
+            </div>
+            <h1 class="secTitle">月球登陸計畫</h1>
+            <p class="subtitle" style="margin-bottom: 15px;">踏上寸草不生的泥岩惡地，體驗一場宛如漫步月球表面的地質奇境</p>
+            <p class="justify-text">田寮「月世界」在地理學上稱為「惡地」，因地殼「回春作用」隆起，脆弱的泥岩經年累月受風化與雨水強烈侵蝕，形成淒涼荒漠的景觀，僅適宜耐旱、耐鹽植物生長，如：箭竹。</p>
+            <p class="justify-text">​這裡也是全臺泥火山最發達的地區，地下的天然氣與泥漿受高壓作用，沿岩層裂縫噴出地表形成「假火山」（其中以大、小滾水最易於觀察），並常有間歇性的噴發現象。</p>
+            <p class="justify-text">
+                看似貧瘠的惡地並非毫無生機，早期居民為生計而開鑿的灌溉水塘，意外成為極旱環境中的「生態綠洲」，時常能發現梅花鹿、穿山甲、食蟹獴等野生動物的蹤跡，這片特殊地景，宛如一座未經人工鑿斧的天然地質生態教室。</p>
+
+            <div class="img-grid">
+                <div class="img-card reveal-up" style="transition-delay: 0.2s;">
+                    <img src="https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&fit=crop&w=600&q=80"
+                        alt="海洋">
+                    <p>深海熱泉生態系，在無光的環境中依然生機盎然。</p>
+                </div>
+                <div class="img-card reveal-up" style="transition-delay: 0.3s;">
+                    <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=600&q=80"
+                        alt="高山">
+                    <p>高山凍原，植物為了抵禦寒風演化出緊貼地面的型態。</p>
+                </div>
+            </div>
+
+            <div class="deco-divider reveal-up" style="transition-delay: 0.35s;"></div>
+
+            <div class="secProblem reveal-up" style="transition-delay: 0.4s;">
+                <h1 class="secTitle">賭博時間</h1>
+                <p class="subtitle">請等待開放題目，下注後請點擊確認下注</p>
+                <div id="cat-月球登陸計畫" style="margin-top: 20px;"></div>
+            </div>
+        </section>
+        <section id="section-1" class="reveal-up" style="transition-delay: 0.1s;">
+            <div class="ui-deco-dots" aria-hidden="true">
+                <div class="ui-deco-dot"></div>
+                <div class="ui-deco-dot"></div>
+                <div class="ui-deco-dot"></div>
+                <div class="ui-deco-dot"></div>
+                <div class="ui-deco-dot"></div>
+            </div>
+            <h1 class="secTitle">淺入藍碳金庫</h1>
+            <p class="subtitle" style="margin-bottom: 15px;">探索生機盎然的潮間帶，解鎖大自然最神秘的濾水系統與儲碳寶庫</p>
+            <p class="justify-text">
+                高美濕地雖然面積不大，但是由於泥質及沙質灘地兼具，加上與河口沼澤地帶鑲嵌在一起，所以孕育了豐富又複雜的濕地生態，以及目前所知全臺灣最大族群的雲林莞草區，形成乾濕相間伴有植物生長的複雜地形，因為地形多變，生態種類亦相當複雜，主要種類為鳥類、魚類、蟹類及其他無脊椎類等生物；每年秋冬之際，都會有大批的候鳥前往作客，不管是短暫的休息，或是駐足過冬，都為高美濕地增添了不同的生態風貌，更成為賞鳥人士的新據點，許多民眾坐在木棧道休憩賞夕陽。
+            </p>
+
+            <div class="img-grid">
+                <div class="img-card reveal-up" style="transition-delay: 0.2s;">
+                    <img src="https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&fit=crop&w=600&q=80"
+                        alt="海洋">
+                    <p>深海熱泉生態系，在無光的環境中依然生機盎然。</p>
+                </div>
+                <div class="img-card reveal-up" style="transition-delay: 0.3s;">
+                    <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=600&q=80"
+                        alt="高山">
+                    <p>高山凍原，植物為了抵禦寒風演化出緊貼地面的型態。</p>
+                </div>
+            </div>
+
+            <div class="deco-divider reveal-up" style="transition-delay: 0.35s;"></div>
+
+            <div class="secProblem reveal-up" style="transition-delay: 0.4s;">
+                <h1 class="secTitle">賭博時間</h1>
+                <p class="subtitle">請等待開放題目，下注後請點擊確認下注</p>
+                <div id="cat-淺入藍碳金庫" style="margin-top: 20px;"></div>
+            </div>
+        </section>
+    </div>
+
+    <!-- 2. 氣候調節區 -->
+    <div class="wrap">
+        <h1 class="block1 reveal-up">氣候調節區</h1>
+
+        <section id="section-2" class="reveal-up" style="transition-delay: 0.1s;">
+            <div class="ui-deco-dots" aria-hidden="true">
+                <div class="ui-deco-dot"></div>
+                <div class="ui-deco-dot"></div>
+                <div class="ui-deco-dot"></div>
+                <div class="ui-deco-dot"></div>
+                <div class="ui-deco-dot"></div>
+            </div>
+            <h1 class="secTitle">千年呼吸之旅</h1>
+            <p class="subtitle" style="margin-bottom: 15px;">穿梭在參天巨木的雲霧之間，與千年森林一同進行一場洗滌心靈的深呼吸</p>
+            <p class="justify-text">
+                日出、雲海、鐵路、森林、晚霞，是提到阿里山無法忽略的五奇；四面高山環繞，氣候涼爽，濕度大、雨量充沛，也時常有濃霧；海拔高度起伏變化大，溪流橫貫其間，清水溪上游段因地形起伏，流經岩壁巨石，瀑布景觀特別發達；沿山麓而上，森林植被隨著海拔高度爬升改變，亞熱帶闊葉林、溫暖闊葉林、涼溫帶針闊葉混合林、冷溫帶山地針葉林，不時可以聞到森林樹種所釋放出的獨特香氣，走進樹林感受神清氣爽；冬末夾道迎客的山櫻花登場，揭開了花季的序幕，直至暮春，換由桃花出場，山谷遍野萬紫千紅，宛如世外桃源，一場令人目不暇給的錦簇盛宴，往往贏得駐足讚嘆。
+            </p>
+
+            <div class="img-grid">
+                <div class="img-card reveal-up" style="transition-delay: 0.2s;">
+                    <img src="https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&fit=crop&w=600&q=80"
+                        alt="海洋">
+                    <p>深海熱泉生態系，在無光的環境中依然生機盎然。</p>
+                </div>
+                <div class="img-card reveal-up" style="transition-delay: 0.3s;">
+                    <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=600&q=80"
+                        alt="高山">
+                    <p>高山凍原，植物為了抵禦寒風演化出緊貼地面的型態。</p>
+                </div>
+            </div>
+
+            <div class="deco-divider reveal-up" style="transition-delay: 0.35s;"></div>
+
+            <div class="secProblem reveal-up" style="transition-delay: 0.4s;">
+                <h1 class="secTitle">賭博時間</h1>
+                <p class="subtitle">請等待開放題目，下注後請點擊確認下注</p>
+                <div id="cat-千年呼吸之旅" style="margin-top: 20px;"></div>
+            </div>
+        </section>
+        <section id="section-3" class="reveal-up" style="transition-delay: 0.1s;">
+            <div class="ui-deco-dots" aria-hidden="true">
+                <div class="ui-deco-dot"></div>
+                <div class="ui-deco-dot"></div>
+                <div class="ui-deco-dot"></div>
+                <div class="ui-deco-dot"></div>
+                <div class="ui-deco-dot"></div>
+            </div>
+            <h1 class="secTitle">彩虹水幕秀</h1>
+            <p class="subtitle" style="margin-bottom: 15px;">迎向飛瀑傾瀉而下的磅礡水氣，捕捉陽光折射在山林間的絢麗幻境</p>
+            <p class="justify-text">
+                區內多為高山丘陵地，地形變化由西北向東南漸次升高，地處雪山山脈尾稜山區，而由於區內滿月圓山狀似滿月，因而有了「滿月圓」的名字。在區域內有二條斷層，且地質屬脆弱的砂頁岩，再加上蚋仔溪河川侵蝕及搬運作用旺盛，谷地落差大，超過1,000公尺以上，河流之水量受降雨影響大，夏季降雨量豐沛且受地形起伏作用，在軟、硬岩石河段之間形成陡壩，產生水潭、瀑布景觀；冬季逢枯水期降雨量少，使河床巨石嶙峋，水面變得較窄，水深亦較淺，也是形成了滿月圓重要的地形、水文景觀。滿月園也是蕨類天堂，低處有白髮蘚、鳥巢蕨，高處是筆筒樹及台灣桫欏，同時是蝶類、鳥類重要棲地，可觀察到白喉笑鶇等珍稀物種。
+            </p>
+
+            <div class="img-grid">
+                <div class="img-card reveal-up" style="transition-delay: 0.2s;">
+                    <img src="https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&fit=crop&w=600&q=80"
+                        alt="海洋">
+                    <p>深海熱泉生態系，在無光的環境中依然生機盎然。</p>
+                </div>
+                <div class="img-card reveal-up" style="transition-delay: 0.3s;">
+                    <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=600&q=80"
+                        alt="高山">
+                    <p>高山凍原，植物為了抵禦寒風演化出緊貼地面的型態。</p>
+                </div>
+            </div>
+
+            <div class="deco-divider reveal-up" style="transition-delay: 0.35s;"></div>
+
+            <div class="secProblem reveal-up" style="transition-delay: 0.4s;">
+                <h1 class="secTitle">賭博時間</h1>
+                <p class="subtitle">請等待開放題目，下注後請點擊確認下注</p>
+                <div id="cat-彩虹水幕秀" style="margin-top: 20px;"></div>
+            </div>
+        </section>
+    </div>
+
+    <!-- 3. 生態庇護所 -->
+    <div class="wrap">
+        <h1 class="block1 reveal-up">生態庇護所</h1>
+
+        <section id="section-4" class="reveal-up" style="transition-delay: 0.1s;">
+            <div class="ui-deco-dots" aria-hidden="true">
+                <div class="ui-deco-dot"></div>
+                <div class="ui-deco-dot"></div>
+                <div class="ui-deco-dot"></div>
+                <div class="ui-deco-dot"></div>
+                <div class="ui-deco-dot"></div>
+            </div>
+            <h1 class="secTitle">花之星光森林</h1>
+            <p class="subtitle" style="margin-bottom: 15px;">漫步於無光害的純淨林間，看點點螢光與落花交織成地上最夢幻的星空</p>
+            <p class="justify-text">
+                新北市土城區公所為提倡健康生態之旅，於2004年闢建了佔地達七公頃的桐花公園，土城桐花公園位於土城的最高峰天上山的山腰，是南天母山與火燄山構成的山谷地形，沿著石壁寮溪親水木棧道婉轉而上。公園內共種植近百株油桐樹、山櫻花，每年春末夏初桐花盛開之際，可以漫步於賞景步道欣賞桐花似雪的美景；近年來生態復育有成，夜晚還能見到螢火蟲飛舞，讓人暫時忘卻塵囂，倘佯在大自然的懷抱。
+            </p>
+
+            <div class="img-grid">
+                <div class="img-card reveal-up" style="transition-delay: 0.2s;">
+                    <img src="https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&fit=crop&w=600&q=80"
+                        alt="海洋">
+                    <p>深海熱泉生態系，在無光的環境中依然生機盎然。</p>
+                </div>
+                <div class="img-card reveal-up" style="transition-delay: 0.3s;">
+                    <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=600&q=80"
+                        alt="高山">
+                    <p>高山凍原，植物為了抵禦寒風演化出緊貼地面的型態。</p>
+                </div>
+            </div>
+
+            <div class="deco-divider reveal-up" style="transition-delay: 0.35s;"></div>
+
+            <div class="secProblem reveal-up" style="transition-delay: 0.4s;">
+                <h1 class="secTitle">賭博時間</h1>
+                <p class="subtitle">請等待開放題目，下注後請點擊確認下注</p>
+                <div id="cat-花之星光森林" style="margin-top: 20px;"></div>
+            </div>
+        </section>
+        <section id="section-5" class="reveal-up" style="transition-delay: 0.1s;">
+            <div class="ui-deco-dots" aria-hidden="true">
+                <div class="ui-deco-dot"></div>
+                <div class="ui-deco-dot"></div>
+                <div class="ui-deco-dot"></div>
+                <div class="ui-deco-dot"></div>
+                <div class="ui-deco-dot"></div>
+            </div>
+            <h1 class="secTitle">生態諾亞方舟</h1>
+            <p class="subtitle" style="margin-bottom: 15px;">結合頂尖環境控制科技，為台灣珍稀瀕危植物打造一座駛向未來的綠色庇護所 </p>
+            <p class="justify-text">
+                都市裡的一片綠地，讓市民與自然、人與環境得以長久共存。植物園是一個備有完整植物蒐集紀錄文件，並進行科學研究、保育、展示及教育的場所；日治時期，日本人於1896年創建「台北苗圃」及母樹園，1921年正式更名為「台北植物園」，是台灣第一座植物園，1945年二次大戰結束後由林業試驗所接管。歷經百餘年歷史，佔地約8.2公頃，劃分成裸子植物、蕨類植物、植物分類園、民族植物、水生植物、荷花池…等各式主題展示區，收集植物種類超過2,000；園內有一座「台灣地名植物溫室」，收集百來種以台灣地名命名的珍稀植物，如大名鼎鼎的台灣杉、野外滅絕的桃園石龍尾、龍潭莕菜等，保存了消失植物復育的火種。
+            </p>
+
+            <div class="img-grid">
+                <div class="img-card reveal-up" style="transition-delay: 0.2s;">
+                    <img src="https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&fit=crop&w=600&q=80"
+                        alt="海洋">
+                    <p>深海熱泉生態系，在無光的環境中依然生機盎然。</p>
+                </div>
+                <div class="img-card reveal-up" style="transition-delay: 0.3s;">
+                    <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=600&q=80"
+                        alt="高山">
+                    <p>高山凍原，植物為了抵禦寒風演化出緊貼地面的型態。</p>
+                </div>
+            </div>
+
+            <div class="deco-divider reveal-up" style="transition-delay: 0.35s;"></div>
+
+            <div class="secProblem reveal-up" style="transition-delay: 0.4s;">
+                <h1 class="secTitle">賭博時間</h1>
+                <p class="subtitle">請等待開放題目，下注後請點擊確認下注</p>
+                <div id="cat-生態諾亞方舟" style="margin-top: 20px;"></div>
+            </div>
+        </section>
+    </div>
+
+    <!-- 4. 里山美食街 -->
+    <div class="wrap">
+        <h1 class="block1 reveal-up">里山美食街</h1>
+
+        <section id="section-6" class="reveal-up" style="transition-delay: 0.1s;">
+            <div class="ui-deco-dots" aria-hidden="true">
+                <div class="ui-deco-dot"></div>
+                <div class="ui-deco-dot"></div>
+                <div class="ui-deco-dot"></div>
+                <div class="ui-deco-dot"></div>
+                <div class="ui-deco-dot"></div>
+            </div>
+            <h1 class="secTitle">黃金稻浪畫布</h1>
+            <p class="subtitle" style="margin-bottom: 15px;">見證順應節氣的友善農法，如何在廣袤大地上揮灑出隨風搖曳的金黃色奇蹟</p>
+            <p class="justify-text">
+                站在河堤上，居高臨下，觸目所及是由一塊塊錯落有致的田地，拼貼成夏綠秋黃的大地，真如孟浩然詩句「綠樹村邊合，青山郭外斜」的悠然意境，一年四季有不同特殊景色，春耕夏耘的綠、秋收的金，冬藏以前各處種起油菜花、波斯菊、小雛菊，如天然畫布一般，展現令人忘憂之美。
+            </p>
+            <p class="justify-text">
+                為推廣食農教育、活化農村經濟，曾舉辦「稻香忘憂谷食農教育體驗營」，邀請大小朋友親身體驗割稻、農耕與食農課程，從實作中學習糧食生產的過程，在田間感受農夫的辛勞與秋收的喜悅，增進民眾對糧食來源與農業價值的理解，也讓人們重新關注土地、尊重自然，讓農村文化在實作與生活中持續傳承，實現農業、環境與社會的共榮發展。
+            </p>
+
+            <div class="img-grid">
+                <div class="img-card reveal-up" style="transition-delay: 0.2s;">
+                    <img src="https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&fit=crop&w=600&q=80"
+                        alt="海洋">
+                    <p>深海熱泉生態系，在無光的環境中依然生機盎然。</p>
+                </div>
+                <div class="img-card reveal-up" style="transition-delay: 0.3s;">
+                    <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=600&q=80"
+                        alt="高山">
+                    <p>高山凍原，植物為了抵禦寒風演化出緊貼地面的型態。</p>
+                </div>
+            </div>
+
+            <div class="deco-divider reveal-up" style="transition-delay: 0.35s;"></div>
+
+            <div class="secProblem reveal-up" style="transition-delay: 0.4s;">
+                <h1 class="secTitle">賭博時間</h1>
+                <p class="subtitle">請等待開放題目，下注後請點擊確認下注</p>
+                <div id="cat-黃金稻浪畫布" style="margin-top: 20px;"></div>
+            </div>
+        </section>
+        <section id="section-7" class="reveal-up" style="transition-delay: 0.1s;">
+            <div class="ui-deco-dots" aria-hidden="true">
+                <div class="ui-deco-dot"></div>
+                <div class="ui-deco-dot"></div>
+                <div class="ui-deco-dot"></div>
+                <div class="ui-deco-dot"></div>
+                <div class="ui-deco-dot"></div>
+            </div>
+            <h1 class="secTitle">茶香秘境探險</h1>
+            <p class="subtitle" style="margin-bottom: 15px;">深入不施農藥的翠綠茶山，與翡翠樹蛙一同在枝葉間尋找最純粹的自然回甘 </p>
+            <p class="justify-text">
+                新北市坪林區以包種茶聞名遐邇，每年吸引許多不只是台灣人更多的是國外旅客聞茶香而至，古樸的老街瀰漫著茶葉茶的清香，在這邊不只可以探訪山城的歷史人文，更可以深刻的品味東方茶業文化。為有機茶園，使用「綠肥」幫助土地休息以及恢復養分，利用蟲害天敵、生物防治的方式嘗試在茶園裡建立起食物鏈，減少蟲害對茶葉的影響，台灣特有種「翡翠樹蛙」也成為茶園的常客。定期為茶園舉辦生態導覽、採茶製茶體驗課程，在喝茶之外可以更認同綠光茶園對於生態保育、有機耕種的理念，喝茶再也不單只是喝茶，我們喝的是一口來自土地的滋味。
+            </p>
+
+            <div class="img-grid">
+                <div class="img-card reveal-up" style="transition-delay: 0.2s;">
+                    <img src="https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&fit=crop&w=600&q=80"
+                        alt="海洋">
+                    <p>深海熱泉生態系，在無光的環境中依然生機盎然。</p>
+                </div>
+                <div class="img-card reveal-up" style="transition-delay: 0.3s;">
+                    <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=600&q=80"
+                        alt="高山">
+                    <p>高山凍原，植物為了抵禦寒風演化出緊貼地面的型態。</p>
+                </div>
+            </div>
+
+            <div class="deco-divider reveal-up" style="transition-delay: 0.35s;"></div>
+
+            <div class="secProblem reveal-up" style="transition-delay: 0.4s;">
+                <h1 class="secTitle">賭博時間</h1>
+                <p class="subtitle">請等待開放題目，下注後請點擊確認下注</p>
+                <div id="cat-茶香秘境探險" style="margin-top: 20px;"></div>
+            </div>
+        </section>
+        <section id="section-8" class="reveal-up" style="transition-delay: 0.1s;">
+            <div class="ui-deco-dots" aria-hidden="true">
+                <div class="ui-deco-dot"></div>
+                <div class="ui-deco-dot"></div>
+                <div class="ui-deco-dot"></div>
+                <div class="ui-deco-dot"></div>
+                <div class="ui-deco-dot"></div>
+            </div>
+            <h1 class="secTitle">尋找石虎嬌客</h1>
+            <p class="subtitle" style="margin-bottom: 15px;">拜訪與野生動物共存的友善蕉園，在綠意中尋覓那神秘又可愛的生態嬌客</p>
+            <p class="justify-text">
+                中寮為緩坡丘陵，日夜溫差較大，種出來的香蕉口感較紮實，曾是提供日本天皇食用的「天皇蕉」，不過這片香蕉園，除了香蕉，還同時種著別的東西，草生栽培香蕉園裡，就有石虎出沒，雖然平時看不到，卻能看見地表長滿超過30公分高的草叢，讓小動物與石虎能有棲息、隱蔽的空間所做的棲地營造，在乾燥的山坡地上也有保濕的效果，同時種有有機柳丁；在這片不灑農藥、兼顧生態功能的果園裡，不只是健康或食安，這種「石虎就算躲在某片葉子後面看你也不意外」、與大自然連結的歸屬感，是慣行農法所無法比擬的。
+            </p>
+
+            <div class="img-grid">
+                <div class="img-card reveal-up" style="transition-delay: 0.2s;">
+                    <img src="https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&fit=crop&w=600&q=80"
+                        alt="海洋">
+                    <p>深海熱泉生態系，在無光的環境中依然生機盎然。</p>
+                </div>
+                <div class="img-card reveal-up" style="transition-delay: 0.3s;">
+                    <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=600&q=80"
+                        alt="高山">
+                    <p>高山凍原，植物為了抵禦寒風演化出緊貼地面的型態。</p>
+                </div>
+            </div>
+
+            <div class="deco-divider reveal-up" style="transition-delay: 0.35s;"></div>
+
+            <div class="secProblem reveal-up" style="transition-delay: 0.4s;">
+                <h1 class="secTitle">賭博時間</h1>
+                <p class="subtitle">請等待開放題目，下注後請點擊確認下注</p>
+                <div id="cat-尋找石虎嬌客" style="margin-top: 20px;"></div>
+            </div>
+        </section>
+    </div>
+
     <script src="/socket.io/socket.io.js"></script>
     <script src="app.js"></script>
 </body>
+
 </html>
