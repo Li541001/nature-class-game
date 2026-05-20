@@ -44,7 +44,7 @@ const questionDB = [
     { category: "花之星光森林", id: 9, text: "請問螢火蟲幼蟲是什麼食性？", options: { A: "肉食性", B: "草食性", C: "雜食性" }, answer: "A" },
     { category: "花之星光森林", id: 10, text: "油桐花是什麼時期引入台灣的？", options: { A: "日治時期", B: "清朝時期", C: "民國初期" }, answer: "B" },
     { category: "生態諾亞方舟", id: 11, text: "植物園的主要功能是什麼？", options: { A: "用於研究、保育與教育的場所", B: "提供民眾休憩之公園", C: "研發與改良食用農作物產量的農業基地" }, answer: "A" },
-    { category: "生態諾亞方舟", id: 12, text: "植物園大約有多少種植物？", options: { A: "4000種", B: "2000種", C: "1000種" }, answer: "C" },
+    { category: "生態諾亞方舟", id: 12, text: "植物園大約有多少種植物？", options: { A: "4000種", B: "2000種", C: "1000種" }, answer: "B" },
     { category: "黃金稻浪畫布", id: 13, text: "請問忘憂谷的綠肥作物有什麼？", options: { A: "油菜花", B: "波斯菊", C: "大花咸豐草" }, answer: ["A", "B"] },
     { category: "黃金稻浪畫布", id: 14, text: "請問什麼樣的耕作方式更適合自然？", options: { A: "順應節氣，不過度使用", B: "一年間不間斷種植", C: "開心時就種，累了就閒置" }, answer: "A" },
     { category: "茶香秘境探險", id: 15, text: "請問穿梭在茶園間的小動物是誰？", options: { A: "台北樹蛙", B: "可達鴨", C: "翡翠樹蛙" }, answer: "C" },
